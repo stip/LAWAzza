@@ -1,0 +1,65 @@
+=========
+B-Splines                                                               [TOC]
+=========
+
+
+Cardinal B-Splines
+==================
+
+
+Centralized B-Splines
+=====================
+
+
+Definition
+----------
+
+Formula: Point Evaluation
+-------------------------
+
+Formula: Point Evaluation of Derivatives
+----------------------------------------
+
+Optimized Formulas in LAWA
+==========================
+As we will see later, the pointwise evaluation of B-Splines is a frequently
+needed task for the adaptive wavelet methods.  Reducing the computational cost
+is crucial for the overall performance.  In LAWA such an reduction gets achieved
+by simplifying the above formulas.
+
+Case 'd is even'
+----------------
+In this case $\text{d}\varphi$ is even, i.e. we have $\text{d}\varphi(x) =
+\text{d}\varphi(|x|) = \text{d}\varphi(-|x|)$.  Furthermore, we exploit that
+$\left(\frac{d}{2} - |x| - k\right)_{+}$ vanishes if $k > \frac{d}{2} - |x|$.
+Hence, the above formula can be simplified as follows:
+
+  *--[LATEX]----------------------------------------------------------------*
+  |                                                                         |
+  |   \begin{eqnarray}                                                      |
+  |   \text{d}\varphi(x) &=& \text{d}\varphi(-|x|)                          |
+  |      =  N_{\text{d}}                                                    |
+  |         \left(-|x| + \left\lfloor\frac{d}{2}\right\rfloor\right)        |
+  |      =  N_{\text{d}}\left(-|x| + \frac{d}{2}\right) \\                  |
+  |     &=& \frac{1}{(d-1)!}                                                |
+  |         \sum\limits_{k=0}^d (-1)^k \binom{d}{k}                         |
+  |         \underbrace{\left(-|x|+\frac{d}{2}-k\right)_{+}^{d-1}           |
+  |                    }_{=0\;\text{if}\;k>d/2-|x|} \\                      |
+  |     &=& \frac{1}{(d-1)!}                                                |
+  |         \sum\limits_{k=0}^{\frac{d}{2} -|x|} (-1)^k \binom{d}{k}        |
+  |         \left(\frac{d}{2}-|x|-k\right)_{+}^{d-1}\\                      |
+  |     &=& \frac{1}{(d-1)!}                                                |
+  |         \sum\limits_{k=0}^{\frac{d}{2} -|x|} (-1)^k \binom{d}{k}        |
+  |         \left(\frac{d}{2}-|x|-k\right)^{d-1}                            |
+  |         \quad\text{as}\;\frac{d}{2}-|x|-k>0.                            |
+  |   \end{eqnarray}                                                        |
+  |                                                                         |
+  *-------------------------------------------------------------------------*
+
+Case 'd is odd'
+---------------
+
+Examples
+========
+
+
