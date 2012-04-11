@@ -29,27 +29,29 @@ by simplifying the above formulas.
 
 Case 'd is even'
 ----------------
-In this case $\text{d}\varphi$ is even, i.e. we have $\text{d}\varphi(x) =
-\text{d}\varphi(|x|) = \text{d}\varphi(-|x|)$.  Furthermore, we exploit that
-$\left(\frac{d}{2} - |x| - k\right)_{+}$ vanishes if $k > \frac{d}{2} - |x|$.
-Hence, the above formula can be simplified as follows:
+In this case ${}_\text{d}\varphi$ is even, i.e. we have ${}_\text{d}\varphi(x)=
+{}_\text{d}\varphi(|x|) = {}_\text{d}\varphi(-|x|)$.  Furthermore, we exploit
+that $\left(\frac{d}{2} - |x| - k\right)_{+}$ vanishes if $k > \frac{d}{2}
+- |x|$.  Hence, the above formula can be simplified as follows:
 
   *--[LATEX]----------------------------------------------------------------*
   |                                                                         |
   |   \begin{eqnarray}                                                      |
-  |   \text{d}\varphi(x) &=& \text{d}\varphi(-|x|)                          |
+  |   {}_\text{d}\varphi(x) &=& {}_\text{d}\varphi(-|x|)                    |
   |      =  N_{\text{d}}                                                    |
   |         \left(-|x| + \left\lfloor\frac{d}{2}\right\rfloor\right)        |
-  |      =  N_{\text{d}}\left(-|x| + \frac{d}{2}\right) \\                  |
+  |      =  N_{\text{d}}\left(\frac{d}{2} -|x| \right) \\                   |
   |     &=& \frac{1}{(d-1)!}                                                |
   |         \sum\limits_{k=0}^d (-1)^k \binom{d}{k}                         |
   |         \underbrace{\left(-|x|+\frac{d}{2}-k\right)_{+}^{d-1}           |
   |                    }_{=0\;\text{if}\;k>d/2-|x|} \\                      |
   |     &=& \frac{1}{(d-1)!}                                                |
-  |         \sum\limits_{k=0}^{\frac{d}{2} -|x|} (-1)^k \binom{d}{k}        |
+  |         \sum\limits_{k=0}^{\left\lfloor\frac{d}{2} -|x|\right\rfloor}   |
+  |         (-1)^k \binom{d}{k}                                             |
   |         \left(\frac{d}{2}-|x|-k\right)_{+}^{d-1}\\                      |
   |     &=& \frac{1}{(d-1)!}                                                |
-  |         \sum\limits_{k=0}^{\frac{d}{2} -|x|} (-1)^k \binom{d}{k}        |
+  |         \sum\limits_{k=0}^{\left\lfloor\frac{d}{2} -|x|\right\rfloor}   |
+  |         (-1)^k \binom{d}{k}                                             |
   |         \left(\frac{d}{2}-|x|-k\right)^{d-1}                            |
   |         \quad\text{as}\;\frac{d}{2}-|x|-k>0.                            |
   |   \end{eqnarray}                                                        |
@@ -58,8 +60,78 @@ Hence, the above formula can be simplified as follows:
 
 Case 'd is odd'
 ---------------
+In this case ${}_\text{d}\varphi$ is symmetric around $\frac{1}{2}$, i.e. we
+have ${}_\text{d}\varphi\left(x+\frac{1}{2}\right) = {}_\text{d}\varphi\left(
+x+\frac{1}{2}\right)$.  For further simplifications we distinguish between the
+case $x \geq 0$ and $x<0$.
 
-Examples
-========
+Case $x\geq0$:
+~~~~~~~~~~~~~~
 
+  *--[LATEX]----------------------------------------------------------------*
+  |                                                                         |
+  |   \begin{eqnarray}                                                      |
+  |     {}_\text{d}\varphi\left(x + \frac{1}{2}\right)                      |
+  |   &=&                                                                   |
+  |     {}_\text{d}\varphi\left(\frac{1}{2}-x\right) =                      |
+  |     {}_\text{d}\varphi\left(\frac{1}{2} - |x|\right) \\                 |
+  |   &=&                                                                   |
+  |     N_{\text{d}}\left(\frac{1}{2} - |x|                                 |
+  |                       + \left\lfloor\frac{d}{2}\right\rfloor\right) \\  |
+  |   &=&                                                                   |
+  |     N_{\text{d}}\left(\frac{1}{2} - |x| + \frac{d-1}{2}\right) \\       |
+  |   &=&                                                                   |
+  |     N_{\text{d}}\left(\frac{d}{2} - |x| \right)                         |
+  |   \end{eqnarray}                                                        |
+  |                                                                         |
+  *-------------------------------------------------------------------------*
 
+Note that for $N_{\text{d}}\left(\frac{d}{2} - |x| \right)$ can reduce the
+formula derived in the case '$d$ even'.
+
+Case $x<0$:
+~~~~~~~~~~~
+
+  *--[LATEX]----------------------------------------------------------------*
+  |                                                                         |
+  |  {}_\text{d}\varphi\left(x + \frac{1}{2}\right) =                       |
+  |  {}_\text{d}\varphi\left(-|x| + \frac{1}{2}\right) =                    |
+  |  {}_\text{d}\varphi\left(\frac{1}{2} - |x|\right)                       |
+  |                                                                         |
+  *-------------------------------------------------------------------------*
+
+Hence we can reuse the formula for the case $x\geq 0$.
+
+Example: Plotting a B-Spline
+============================
+
+Complete Code
+-------------
+:import: examples/bspline.cc [stripped, downloadable]
+
+Comments on Code
+----------------
+:import: examples/bspline.cc [brief]
+
+Compile, Run and Plot
+---------------------
+
+  *--[SHELL]----------------------------------------------------------------*
+  |                                                                         |
+  | cd examples                                                             |
+  | rm -f *.o                                                               |
+  | clang++ -std=c++0x -I.. -I../../FLENS/ -c ../lawa/*.cc               +++|
+  |                                           ../lawa/math/*.cc             |
+  | clang++ -std=c++0x -I.. -I../../FLENS/ *.o -o bspline bspline.cc        |
+  | ./bspline                                                               |
+  | gnuplot bspline.gps                                                     |
+  |                                                                         |
+  *-------------------------------------------------------------------------*
+
+This produces the following image
+
+  *--[IMAGE]----------------------------------------------------------------*
+  |                                                                         |
+  | bspline.png                                                             |
+  |                                                                         |
+  *-------------------------------------------------------------------------*

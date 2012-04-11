@@ -11,29 +11,54 @@ int
 main()
 {
     const int j = 0;
-    const unsigned int d = 4;
-    const unsigned int deriv = 2;
+    const unsigned int d = 3;
+    const unsigned int deriv = 0;
+
+///
+/// Setup a B-Spline of order `d`
+///
     BSpline<double,Primal,R,CDF> phi(d);
-   
-    ofstream data("schalk.data");
+
+    ofstream data("bspline.data");
+
+///
+/// For `j=0` the support of `phi` is the interval `[phi.l1, phi.l2]`.  We
+/// want to plot all splines that overlap with `[0,1]`.  As the support of
+/// $\varphi\left(x - k\right)$ is `[phi.l1+k, phi.l2+k]` we select only
+/// indices of `k` that satify:
+///
+///   - `phi.l1+k < 1`, i.e. `k < 1-phi.l1` or
+///   - `phi.l2+k > 0`, i.e. `k > -phi.l2`
+///
+/// So the smallest relevant value of `k` is `-phi.l2+1` and the largest is
+/// `-phi.l1`.
+///
     int first = -phi.l2+1,
-        last  = -phi.l1-1;
-    for (int k=first; k<=last; ++k) { 
+        last  = -phi.l1;
+
+///
+/// Next we evaluate $\varphi\left(x - k\right)$ for all these values of $k$
+///
+    for (int k=first; k<=last; ++k) {
         Support<double> supp = phi.support(j,k);
         for (double x=supp.l1; x<=supp.l2; x+=0.0125) {
             data << x << " " << phi(x,j,k,deriv) << endl;
         }
-        data << endl << endl; 
+        data << endl << endl;
     }
     data << endl;
     data.close();
 
-    ofstream gps("schalk.gps");
-    gps << "set terminal png;" << endl;
-    gps << "set output 'N" << d << "_" << deriv << ".png'" << endl;
-    gps << "plot 'schalk.data' i 0 w l t''";
+///
+/// For plotting we create a gnuplot script.
+///
+    ofstream gps("bspline.gps");
+    gps << "set terminal pngcairo;" << endl;
+    gps << "set output 'bspline.png'" << endl;
+    gps << "set size ratio -1" << endl;
+    gps << "plot 'bspline.data' i 0 w l t''";
     for (int i=first+1; i<=last; ++i) {
-        gps << ", 'schalk.data' i " << i-first << " w l t''";
+        gps << ", 'bspline.data' i " << i-first << " w l t''";
     }
     gps << endl;
     gps.close();
