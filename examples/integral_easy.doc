@@ -1,0 +1,36 @@
+=============================
+Integrating B-Spline Products                                          [TOC]
+=============================
+
+Computes integrals of the form
+
+  *--[LATEX]----------------------------------------------------------------*
+  |                                                                         |
+  |  \int\limits_{\mathbb{R}}                                               |
+  |       \varphi_1^{(\nu_1)} \left(2^{j_1} x - k_1 \right)                 |
+  |       \varphi_2^{(\nu_2)} \left(2^{j_2} x - k_2 \right)                 |
+  |       \;\text{d}x                                                       |
+  |                                                                         |
+  *-------------------------------------------------------------------------*
+
+
+Code Example
+============
+:import: examples/integral_easy.cc [downloadable, stripped]
+
+Compile and Run
+===============
+
+  *--[SHELL]----------------------------------------------------------------*
+  |                                                                         |
+  | cd examples                                                             |
+  | rm -f *.o                                                               |
+  | clang++ -std=c++0x -I.. -I../../FLENS/ -c ../lawa/*.cc               +++|
+  |                                           ../lawa/math/*.cc             |
+  | clang++ -std=c++0x -I.. -I../../FLENS/ *.o -o integral_easy          +++|
+  |                                            integral_easy.cc             |
+  | ./integral_easy                                                         |
+  |                                                                         |
+  *-------------------------------------------------------------------------*
+
+

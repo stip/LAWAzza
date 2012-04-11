@@ -5,6 +5,7 @@
 
 using namespace lawa;
 using namespace std;
+
 namespace lawa {
 
 template <QuadratureType Quad, typename First, typename Second>
