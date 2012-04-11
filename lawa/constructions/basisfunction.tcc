@@ -1,6 +1,6 @@
 /*
  LAWA - Library for Adaptive Wavelet Applications.
- Copyright (C) 2008-2011 Sebastian Kestler, Kristina Steih,
+ Copyright (C) 2008-2012 Sebastian Kestler, Kristina Steih,
                          Alexander Stippler, Schalk.
 
  This program is free software; you can redistribute it and/or modify
@@ -56,13 +56,13 @@ BasisFunction<T,Side,Domain,Cons>::support(int /*j*/, Integer /*k*/) const
 //    return DenseVector<T>(); 
 //}
 //
-//template <typename T, FunctionSide Side, DomainType Domain, Construction Cons>
-//const T
-//BasisFunction<T,Side,Domain,Cons>::tic(int /*j*/) const
-//{
-//    assert(0);
-//    return 0.;
-//}
+template <typename T, FunctionSide Side, DomainType Domain, Construction Cons>
+const T
+BasisFunction<T,Side,Domain,Cons>::tic(int /*j*/) const
+{
+    assert(0);
+    return 0.;
+}
 
 } // namespace lawa
 

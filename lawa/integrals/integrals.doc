@@ -1,0 +1,23 @@
+==title: Integrals involving B-splines and/or wavelets==
+
+Implementation of the calculation of integrals involving two factors.
+
+==section: Template Parameters==
+The declaration of [Integral] reads
+==code:.cc==
+template <typename T, 
+          QuadratureType Quad,
+          typename First, 
+          typename Second>
+struct Integral;
+====
+with template parameters:
+==list:begin==
+->[T]: Element type of involved integrands
+->[Quad]: The quadrature type to be used
+->[First]: The first factor in the integrand
+->[Second]: The second factor in the integrand
+==list:end==
+
+Realized are versions where at least one factor is a B-spline or B-spline
+wavelet.

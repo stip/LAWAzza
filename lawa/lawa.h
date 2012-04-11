@@ -21,11 +21,14 @@
 #ifndef LAWA_LAWA_H
 #define LAWA_LAWA_H 1
 
+#include <lawa/function.h>
+
 #include <lawa/enum.h>
 #include <lawa/flensforlawa.h>
 #include <lawa/typedefs.h>
 
 #include <lawa/constructions/constructions.h>
+#include <lawa/integrals/integrals.h>
 #include <lawa/math/math.h>
 
 #endif // LAWA_LAWA_H

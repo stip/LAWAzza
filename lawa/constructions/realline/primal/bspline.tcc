@@ -1,6 +1,6 @@
 /*
  LAWA - Library for Adaptive Wavelet Applications.
- Copyright (C) 2008-2011 Sebastian Kestler, Kristina Steih,
+ Copyright (C) 2008-2012 Sebastian Kestler, Kristina Steih,
                          Alexander Stippler, Schalk.
 
  This program is free software; you can redistribute it and/or modify
@@ -95,19 +95,18 @@ BSpline<T,Primal,R,CDF>::support(int j, Integer k) const
 
 /*TODO
 template <typename T>
-const DenseVector<Array<T> >
+const DenseVector<T>
 BSpline<T,Primal,R,CDF>::singularSupport(int j, Integer k) const
 {
     return linspace(support(j,k).l1, support(j,k).l2, d+1);
 }
-
+*/
 template <typename T>
 const T
 BSpline<T,Primal,R,CDF>::tic(int j) const
 {
     return pow2i<T>(-j);
 }
-*/
 
 template <typename T>
 const DenseVector<T> &
@@ -126,7 +125,7 @@ _bspline_mask(int d)
 
     if (d==0) {
         DenseVector<T> res(1);
-        res = T(1.);
+        res = T(1);
         return res;
     }
     T factor = 1 << (d-1);
