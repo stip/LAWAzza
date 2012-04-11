@@ -21,6 +21,8 @@
 #ifndef LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_H
 #define LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_H 1
 
+#include <lawa/constructions/realline/primal/basis.h>
 #include <lawa/constructions/realline/primal/bspline.h>
+#include <lawa/constructions/realline/primal/mra.h>
 
 #endif // LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_H

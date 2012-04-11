@@ -21,7 +21,10 @@
 #ifndef LAWA_CONSTRUCTIONS_REALLINE_TCC
 #define LAWA_CONSTRUCTIONS_REALLINE_TCC 1
 
+#include <lawa/constructions/realline/refinementmatrix.tcc>
+
 #include <lawa/constructions/realline/primal/primal.tcc>
+#include <lawa/constructions/realline/dual/dual.tcc>
 
 #endif // LAWA_CONSTRUCTIONS_REALLINE_TCC
 

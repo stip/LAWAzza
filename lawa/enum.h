@@ -1,6 +1,6 @@
 /*
  LAWA - Library for Adaptive Wavelet Applications.
- Copyright (C) 2008-2011 Sebastian Kestler, Kristina Steih,
+ Copyright (C) 2008-2012 Sebastian Kestler, Kristina Steih,
                          Alexander Stippler, Schalk.
 
  This program is free software; you can redistribute it and/or modify
@@ -24,15 +24,27 @@
 namespace lawa {
 
 enum FunctionSide {
-    Primal
+    Primal,
+    Dual,
+    Orthogonal
 };
 
 enum DomainType {
-    R
+    R,
+    Periodic
 };
 
 enum Construction {
     CDF
+};
+
+enum QuadratureType {
+    Gauss,
+    Trapezoidal
+};
+
+enum XType {
+    XBSpline
 };
 
 } // namespace lawa

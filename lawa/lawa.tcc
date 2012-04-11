@@ -21,7 +21,10 @@
 #ifndef LAWA_LAWA_TCC
 #define LAWA_LAWA_TCC 1
 
+#include <lawa/function.tcc>
+
 #include <lawa/constructions/constructions.tcc>
+#include <lawa/integrals/integrals.tcc>
 #include <lawa/math/math.tcc>
 
 #endif // LAWA_LAWA_TCC

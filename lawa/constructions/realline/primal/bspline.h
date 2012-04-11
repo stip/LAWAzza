@@ -1,6 +1,6 @@
 /*
  LAWA - Library for Adaptive Wavelet Applications.
- Copyright (C) 2008-2011 Sebastian Kestler, Kristina Steih,
+ Copyright (C) 2008-2012 Sebastian Kestler, Kristina Steih,
                          Alexander Stippler, Schalk.
 
  This program is free software; you can redistribute it and/or modify
@@ -51,11 +51,11 @@ struct BSpline<_T,Primal,R,CDF>
     const Support<T>
     support(int j, Integer k) const;
 
-//TODO    const DenseVector<Array<T> >
+//TODO    const DenseVector<T>
 //TODO    singularSupport(int j, Integer k) const;
 
-//TODO    const T
-//TODO    tic(int j) const;
+    const T
+    tic(int j) const;
 
     const DenseVector<T> &
     mask() const;

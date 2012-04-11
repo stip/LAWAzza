@@ -12,12 +12,12 @@ main()
 {
     const int j = 0;
     const unsigned int d = 4;
-    const unsigned int deriv = 2;
+    const unsigned int deriv = 1;
     BSpline<double,Primal,R,CDF> phi(d);
    
     ofstream data("schalk.data");
     int first = -phi.l2+1,
-        last  = -phi.l1-1;
+        last  = -phi.l1;
     for (int k=first; k<=last; ++k) { 
         Support<double> supp = phi.support(j,k);
         for (double x=supp.l1; x<=supp.l2; x+=0.0125) {
