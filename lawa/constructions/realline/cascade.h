@@ -17,24 +17,20 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef LAWA_CONSTRUCTIONS_REALLINE_SUBDIVISION_H
-#define LAWA_CONSTRUCTIONS_REALLINE_SUBDIVISION_H 1
+#ifndef LAWA_CONSTRUCTIONS_REALLINE_CASCADE_H
+#define LAWA_CONSTRUCTIONS_REALLINE_CASCADE_H 1
 
-#include <lawa/enum.h>
+#include <lawa/constructions/bspline.h>
 #include <lawa/flensforlawa.h>
 
 namespace lawa {
 
-template <typename T, FunctionSide Side>
-    void
-    subdivide(const BSpline<T,Side,R,CDF> &phi, int j,
-              DenseVector<T> &dyadicValues);
+template <typename X, typename Y>
+void
+evalAtDyadicGrid_Cascade(const flens::DenseVector<X> &sf, int J,
+                         flens::DenseVector<Y> &scaling);
 
 } // namespace lawa
 
-
-//Das süßeste, kleine KoalaBÄRCHEN könnte doch nie nie nie niemals 
-//jemandem böse sein, der so einen Schrott in diesen schönen Header schreibt!!!!!!!!
-
-#endif // LAWA_CONSTRUCTIONS_REALLINE_SUBDIVISION_H
+#endif // LAWA_CONSTRUCTIONS_REALLINE_CASCADE_H
 
