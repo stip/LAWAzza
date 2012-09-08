@@ -60,7 +60,6 @@ _evalAtIntegersByEVP(const DenseVector<T> &a, DenseVector<T> &valuesAtIntegers)
             pos = i;
         }
     }
-    std::cerr << pos << std::endl;
     valuesAtIntegers = VR(_,pos); // choosing the corresponding eigenvector.
     
     // the elements of the eigenvector have to sum up to 1.
@@ -68,7 +67,6 @@ _evalAtIntegersByEVP(const DenseVector<T> &a, DenseVector<T> &valuesAtIntegers)
                             valuesAtIntegers.engine().data()
                           + valuesAtIntegers.length(), 0.0);
     assert(sum);
-    std::cerr << sum << std::endl;
     valuesAtIntegers /= sum;
     valuesAtIntegers.engine().changeIndexBase(l1);
 }
@@ -86,7 +84,7 @@ void
 _evalAtIntegers(const BSpline<T,Dual,R,CDF> phi_,
                 DenseVector<T> &valuesAtIntegers)
 {
-    if ((phi_.d==2) && (phi_.d_)) {
+    if ((phi_.d==2) && (phi_.d_==2)) {
         valuesAtIntegers.engine().resize(5,-2);
         valuesAtIntegers = 0., -2., 5., -2., 0.;
     } else {
@@ -96,12 +94,12 @@ _evalAtIntegers(const BSpline<T,Dual,R,CDF> phi_,
 
 template <typename T>
 void
-subdivide(const BSpline<T,Primal,R,CDF> &phi, int j,
-          DenseVector<T> &dyadicValues)
+subdivide(const BSpline<T,Primal,R,CDF> &phi,
+          const int                     j,
+          DenseVector<T>                &dyadicValues)
 {
     DenseVector<T> valuesAtIntegers;
     _evalAtIntegers(phi, valuesAtIntegers);
-
     // set values at integer positions of result.
     int twoJ = pow2i<T>(j);
     int from = twoJ*phi.l1,
@@ -133,7 +131,9 @@ subdivide(const BSpline<T,Dual,R,CDF> &phi_, int j,
     int twoJ = pow2i<T>(j);
     int from = twoJ*phi_.l1_,
           to = twoJ*phi_.l2_;
+
     dyadicValues.engine().resize(to-from+1,from);
+    
     dyadicValues(_(from,twoJ,to)) = valuesAtIntegers;
 
     // calculate values inbetween on dyadic grid.

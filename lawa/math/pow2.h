@@ -26,16 +26,19 @@
 namespace lawa {
 
 template <typename T>
-    typename flens::RestrictTo<flens::IsSame<T,int>::value
-                            || flens::IsSame<T,Integer>::value, const T>::Type
+    typename RestrictTo<IsSame<T,int>::value
+                     or IsSame<T,Integer>::value,
+             const T>::Type
     pow2i(int expo);
 
 template <typename T>
-    typename flens::RestrictTo<flens::IsSame<T,double>::value, const T>::Type
+    typename RestrictTo<IsSame<T,double>::value,
+             const T>::Type
     pow2i(int expo);
 
 template <typename T>
-    typename flens::RestrictTo<flens::IsSame<T,double>::value, const T>::Type
+    typename RestrictTo<IsSame<T,double>::value,
+             const T>::Type
     pow2ih(int expo);
 
 } // namespace lawa

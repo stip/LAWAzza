@@ -1,6 +1,6 @@
 /*
   This file is part of LAWA - Library for Adaptive Wavelet Applications.
-  Copyright (C) 2008-2011  Mario Rometsch, Alexander Stippler.
+  Copyright (C) 2008-2012  Schalk, Alexander Stippler.
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -29,8 +29,6 @@
 
 namespace lawa {
 
-using namespace flens;
-
 template <typename _T>
 struct Wavelet<_T,Primal,R,CDF>
     : public BasisFunction<_T,Primal,R,CDF>
@@ -40,24 +38,27 @@ struct Wavelet<_T,Primal,R,CDF>
     static const DomainType Domain = R;
     static const Construction Cons = CDF;
 
-    Wavelet(int _d, int _d_);
+    Wavelet(int d, int d_);
 
+/*
+    // Do we need this constructor?
     Wavelet(const BSpline<T,Primal,R,CDF> &_phi,
             const BSpline<T,Dual,R,CDF> &_phi_);
+*/
 
     Wavelet(const Basis<T,Primal,R,CDF> &_basis);
 
     const T
-    operator()(T x, int j, long k, unsigned short deriv) const;
+    operator()(T x, int j, Integer k, unsigned short deriv) const;
 
-    Support<T>
-    support(int j, long k) const;
-
-    DenseVector<T>
-    singularSupport(int j, long k) const;
+    const Support<T>
+    support(int j, Integer k) const;
 
     DenseVector<T>
-    optim_singularSupport(int j, long k) const;
+    singularSupport(int j, Integer k) const;
+
+    DenseVector<T>
+    optim_singularSupport(int j, Integer k) const;
 
     const T
     tic(int j) const;
@@ -74,7 +75,7 @@ struct Wavelet<_T,Primal,R,CDF>
     const DenseVector<T> b;
     const BSpline<T,Primal,R,CDF> phi;
     const BSpline<T,Dual,R,CDF> phi_;
-    DenseVector<T> singularPts;
+    DenseVector<T> singularPoints;
 };
 
 } // namespace lawa

@@ -1,6 +1,6 @@
 /*
   This file is part of LAWA - Library for Adaptive Wavelet Applications.
-  Copyright (C) 2008-2011  Mario Rometsch, Alexander Stippler.
+  Copyright (C) 2008-2012  Schalk, Alexander Stippler.
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,9 @@
 #include <lawa/constructions/basisfunction.h>
 #include <lawa/constructions/mra.h>
 #include <lawa/constructions/bspline.h>
+#include <lawa/constructions/refinementmatrix.h>
 #include <lawa/enum.h>
+#include <lawa/typedefs.h>
 
 namespace lawa {
 
@@ -37,7 +39,7 @@ class MRA<_T,Primal,R,CDF>
         static const Construction Cons = CDF;
 
         typedef BasisFunction<T,Primal,R,CDF> BasisFunctionType;
-        typedef BSpline<T,Primal,R,CDF> BSplineType;
+        typedef BSpline<T,Primal,R,CDF>       BSplineType;
 
         MRA(int _d, int j=0);
 
@@ -47,9 +49,10 @@ class MRA<_T,Primal,R,CDF>
         void
         setLevel(int j) const;
 
-        const int d, j0;
-        BSpline<T,Primal,R,CDF> phi;
-        RefinementMatrix<T,R,CDF> M0;
+        const int                           d;
+        const int                           j0;
+        BSpline<T,Primal,R,CDF>             phi;
+        flens::RefinementMatrix<T,R,CDF>    M0;
 
     private:
         mutable int _j;

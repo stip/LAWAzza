@@ -24,7 +24,38 @@
 //TODO
 #include <flens/flens.h>
 
+
 namespace lawa {
+
+// import types from cxxblas
+
+using cxxblas::StorageOrder;
+using cxxblas::ColMajor;
+using cxxblas::RowMajor;
+
+using cxxblas::StorageUpLo;
+using cxxblas::Upper;
+using cxxblas::Lower;
+
+using cxxblas::Side;
+using cxxblas::Left;
+using cxxblas::Right;
+
+using cxxblas::Transpose;
+using cxxblas::NoTrans;
+using cxxblas::Trans;
+using cxxblas::Conj;
+using cxxblas::ConjTrans;
+
+using cxxblas::Diag;
+using cxxblas::Unit;
+using cxxblas::NonUnit;
+
+
+// import form flens
+
+using flens::IsSame;
+using flens::RestrictTo;
 
 typedef flens::IndexOptions<>::IndexType Integer;
 

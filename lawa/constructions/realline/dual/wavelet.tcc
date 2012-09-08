@@ -23,8 +23,6 @@
 
 namespace lawa {
 
-using namespace flens;
-
 template <typename T>
 Wavelet<T,Dual,R,CDF>::Wavelet(int _d, int _d_)
     : d(_d), d_(_d_), mu(d&1), l1_((2-(d+d_))/2), l2_((d+d_)/2),
@@ -43,11 +41,12 @@ Wavelet<T,Dual,R,CDF>::Wavelet(const BSpline<T,Primal,R,CDF> &_phi,
 }
 
 template <typename T>
-T
-Wavelet<T,Dual,R,CDF>::operator()(T x, int j, long k, unsigned short deriv) const
+const T
+Wavelet<T,Dual,R,CDF>::operator()(T x, int j, Integer k,
+                                  unsigned short deriv) const
 {
     assert(deriv==0);
-    
+
     T ret = T(0);
     x = pow2i<T>(j)*x-k;
     for (int i=b_.firstIndex(); i<=b_.lastIndex(); ++i) {
@@ -57,8 +56,8 @@ Wavelet<T,Dual,R,CDF>::operator()(T x, int j, long k, unsigned short deriv) cons
 }
 
 template <typename T>
-Support<T>
-Wavelet<T,Dual,R,CDF>::support(int j, long k) const
+const Support<T>
+Wavelet<T,Dual,R,CDF>::support(int j, Integer k) const
 {
     return pow2i<T>(-j) * Support<T>(l1_+k, l2_+k);
 }

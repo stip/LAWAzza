@@ -1,0 +1,33 @@
+====================
+B-Splines Refinement                                                     [TOC]
+====================
+
+Complete Code
+=============
+:import: examples/test_bspline_refinement.cc [stripped, downloadable]
+
+
+Compile, Run and Plot
+=====================
+
+  *--[SHELL]----------------------------------------------------------------*
+  |                                                                         |
+  |  cd examples                                                            |
+  |  rm -f *.o                                                              |
+  |  clang++ -std=c++0x -I.. -I../../FLENS/ -c ../lawa/*.cc              +++|
+  |                                            ../lawa/math/*.cc            |
+  |  clang++ -std=c++0x -I.. -I../../FLENS/ *.o                          +++|
+  |          -o test_bspline_refinement  test_bspline_refinement.cc         |
+  |  ./test_bspline_refinement                                              |
+  |  gnuplot test_bspline_refinement.gps                                    |
+  |                                                                         |
+  *-------------------------------------------------------------------------*
+
+This produces the following image
+
+
+  *--[IMAGE]----------------------------------------------------------------*
+  |                                                                         |
+  | test_bspline_refinement.png                                             |
+  |                                                                         |
+  *-------------------------------------------------------------------------*

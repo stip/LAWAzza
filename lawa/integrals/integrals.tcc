@@ -21,7 +21,7 @@
 #ifndef LAWA_INTEGRALS_INTEGRALS_TCC
 #define LAWA_INTEGRALS_INTEGRALS_TCC 1
 
-//#include <lawa/integrals/integral.tcc>
+#include <lawa/integrals/integral.tcc>
 #include <lawa/integrals/quadrature.tcc>
 
 #endif // LAWA_INTEGRALS_INTEGRALS_TCC

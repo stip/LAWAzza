@@ -43,10 +43,10 @@ struct BSpline<_T,Dual,R,CDF>
     ~BSpline();
 
     const T
-    operator()(T x, int j, long k, unsigned short deriv=0) const;
+    operator()(T x, int j, Integer k, unsigned short deriv=0) const;
 
-    Support<T>
-    support(int j, long k) const;
+    const Support<T>
+    support(int j, Integer k) const;
     
     const DenseVector<T> &
     mask() const;

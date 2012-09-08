@@ -1,0 +1,12 @@
+*.out
+*.data
+*.png
+*.gps
+*.o
+examples/*
+!examples/*.*
+examples/*.data
+examples/*.o
+examples/*.out
+examples/*.png
+examples/*.gps

@@ -43,11 +43,12 @@ template <typename T>
 const BasisFunction<T,Dual,R,CDF> &
 Basis<T,Dual,R,CDF>::generator(XType xtype) const
 {
+    assert(xtype==XBSpline || xtype==XWavelet);
+
     if (xtype==XBSpline) {
-        return mra.phi_;
-    } else {
-        return psi_;
+        return mra_.phi_;
     }
+    return psi_;
 }
 
 } // namespace lawa

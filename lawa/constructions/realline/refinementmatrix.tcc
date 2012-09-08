@@ -1,6 +1,6 @@
 /*
   LAWA - Library for Adaptive Wavelet Applications.
-  Copyright (C) 2008,2009  Mario Rometsch, Alexander Stippler.
+  Copyright (C) 2008-2012  Schalk, Alexander Stippler.
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -45,27 +45,80 @@ RefinementMatrix<T,R,CDF>::RefinementMatrix(const Wavelet<T,Side,R,CDF> &wavelet
 /*
 template <typename X, typename Y>
 void
-mv(cxxblas::Transpose transA, typename X::ElementType alpha,
-   const RefinementMatrix<typename X::ElementType,R,CDF> &A,
-   const flens::DenseVector<X> &x, 
-   typename X::ElementType beta, flens::DenseVector<Y> &y)
+mv(cxxblas::Transpose                                       transA,
+   typename X::ElementType                                  alpha,
+   const RefinementMatrix<typename X::ElementType,R,CDF>    &A,
+   const flens::DenseVector<X>                              &x, 
+   typename X::ElementType                                  beta,
+   flens::DenseVector<Y>                                    &y)
 {
-    assert(0);
+    using namespace cxxblas;
+    using std::min;
+
+    typedef typename X::ElementType T;
+    typedef typename X::IndexType   IndexType;
+
+    const lawa::DenseVector<T> &a = A.band;
+    IndexType l1 = x.firstIndex();
+    IndexType l2 = x.lastIndex();
+
+    if (transA==cxxblas::NoTrans) {
+        if (beta==0) {
+            y.resize(2*(l2-l1)+1, 2*l1) || y.fill();
+        } else {
+            assert(y.length()==2*(l2-l1));
+            assert(y.firstIndex()==2*l1);
+        }
+
+        const Underscore<IndexType>  _;
+
+        for (IndexType l=l1, L=2*l1; l<=l2; ++l, ++L) {
+            const IndexType Ly = min(2*l2, L+a.length()-1);
+            const IndexType La = min(l2, 2*(l2-l1)-l-1);
+
+            auto        _y = y(_(L,Ly));
+            const auto  _a = a(_(l1,La));
+
+            _y += alpha*x(l) * _a;
+
+        }
+
+    } else { // (transA==cxxblas::Trans)
+        assert(0);
+    }
+}
+*/
+
+
+//
+// Urban: p25-26
+//
+template <typename X, typename Y>
+void
+mv(cxxblas::Transpose                                       transA,
+   typename X::ElementType                                  alpha,
+   const RefinementMatrix<typename X::ElementType,R,CDF>    &A,
+   const flens::DenseVector<X>                              &x, 
+   typename X::ElementType                                  beta,
+   flens::DenseVector<Y>                                    &y)
+{
+    using namespace cxxblas;
+    
     typedef typename X::ElementType T;
 
     assert(alpha==1.);
     assert(x.engine().stride()==1);
 
-    const DenseVector<T> &a = A.band;
+    const lawa::DenseVector<T> &a = A.band;
     int lx = x.length();
     int la = a.length();
     
     if (transA==cxxblas::NoTrans) {
         if (beta==0) {
-            y.engine().resize(2*lx,x.firstIndex()-a.firstIndex()) || y.engine().fill();
+            y.resize(2*lx,x.firstIndex()-a.firstIndex()) || y.fill();
         } else {
             assert(y.length()==2*lx);
-            y.engine().changeIndexBase(x.firstIndex()-a.firstIndex());
+            y.changeIndexBase(x.firstIndex()-a.firstIndex());
         }
         const T *xp = x.engine().data();
         for (int k=0; k<lx; ++k, ++xp) {
@@ -91,7 +144,6 @@ mv(cxxblas::Transpose transA, typename X::ElementType alpha,
         }
     }
 }
-*/
 
 } // namespace flens
 

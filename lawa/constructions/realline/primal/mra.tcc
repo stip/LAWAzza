@@ -1,6 +1,6 @@
 /*
   LAWA - Library for Adaptive Wavelet Applications.
-  Copyright (C) 2008,2009  Mario Rometsch, Alexander Stippler.
+  Copyright (C) 2008-2012  Schalk, Alexander Stippler.
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -16,6 +16,11 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
+#ifndef LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_MRA_TCC
+#define LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_MRA_TCC 1
+
+#include <lawa/constructions/realline/primal/mra.h>
 
 namespace lawa {
 
@@ -41,3 +46,4 @@ MRA<T,Primal,R,CDF>::setLevel(int j) const
 
 } // namespace lawa
 
+#endif // LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_MRA_TCC

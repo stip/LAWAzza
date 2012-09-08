@@ -29,8 +29,6 @@
 
 namespace lawa {
 
-using namespace flens;
-
 template <typename _T>
 struct Wavelet<_T,Dual,R,CDF>
     : public BasisFunction<_T,Dual,R,CDF>
@@ -45,11 +43,11 @@ struct Wavelet<_T,Dual,R,CDF>
     Wavelet(const BSpline<T,Primal,R,CDF> &_phi,
             const BSpline<T,Dual,R,CDF> &_phi_);
 
-    T
-    operator()(T x, int j, long k, unsigned short deriv=0) const;
+    const T
+    operator()(T x, int j, Integer k, unsigned short deriv=0) const;
 
-    Support<T>
-    support(int j, long k) const;
+    const Support<T>
+    support(int j, Integer k) const;
 
     const DenseVector<T> &
     mask() const;

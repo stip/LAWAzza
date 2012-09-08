@@ -21,9 +21,13 @@
 #ifndef LAWA_CONSTRUCTIONS_REALLINE_H
 #define LAWA_CONSTRUCTIONS_REALLINE_H 1
 
+#include <lawa/constructions/realline/cascade.h>
+#include <lawa/constructions/realline/evaluate.h>
 #include <lawa/constructions/realline/subdivision.h>
 
 #include <lawa/constructions/realline/primal/primal.h>
 #include <lawa/constructions/realline/dual/dual.h>
+
+#include <lawa/constructions/realline/waveletcoeff.h>
 
 #endif // LAWA_CONSTRUCTIONS_REALLINE_H

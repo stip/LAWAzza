@@ -44,7 +44,8 @@ enum QuadratureType {
 };
 
 enum XType {
-    XBSpline
+    XBSpline,
+    XWavelet
 };
 
 } // namespace lawa

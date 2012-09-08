@@ -33,7 +33,8 @@ namespace lawa {
 //--- primal * primal or orthogonal * orthogonal
 template <typename First, typename Second>
 typename RestrictTo<BothPrimal<First,Second>::value
-                    or BothOrthogonal<First,Second>::value, typename First::T>::Type
+                 or BothOrthogonal<First,Second>::value,
+         typename First::T>::Type
 _integrate(const Integral<Gauss,First,Second> &integral)
 {
     typedef typename First::T T;
@@ -59,10 +60,14 @@ _integrate(const Integral<Gauss,First,Second> &integral)
     return ret;
 }
 
-/*
-//--- (primal * dual) or (dual * primal) or (dual * dual) or (dual * orthogonal) or (orthogonal * dual)
+//
+//--- (primal * dual) or (dual * primal) or (dual * dual) or
+//    (dual * orthogonal) or (orthogonal * dual)
+//
 template <QuadratureType Quad, typename First, typename Second>
-typename RestrictTo<IsDual<First>::value or IsDual<Second>::value, typename First::T>::Type
+typename RestrictTo<IsDual<First>::value
+                 or IsDual<Second>::value,
+         typename First::T>::Type
 _integrate(const Integral<Quad,First,Second> &integral)
 {
     typedef typename First::T T;
@@ -72,13 +77,15 @@ _integrate(const Integral<Quad,First,Second> &integral)
     Support<T> common;
     if (overlap(first.support(integral.j1,integral.k1),
                 second.support(integral.j2,integral.k2),
-                common)) {
+                common)) 
+    {
         return integral.quadrature(common.l1, common.l2);
     } else {
         return 0;
     }
 }
-    
+
+/*
 //--- function * primal/dual/orthogonal
 template <QuadratureType Quad, typename First, typename Second>
 typename First::T
@@ -200,7 +207,9 @@ _integrand(const Integral<Quad,First,Second> &integral, typename First::T x)
 {
     const typename First::BasisFunctionType &first = integral.first.generator(integral.e1);
     const typename Second::BasisFunctionType &second = integral.second.generator(integral.e2);
-    return first(x,integral.j1,integral.k1,integral.deriv1) * second(x,integral.j2,integral.k2,integral.deriv2);
+
+    return first(x, integral.j1, integral.k1, integral.deriv1)
+         * second(x, integral.j2, integral.k2, integral.deriv2);
 }
 /*
 //--- function * primal/dual/orthogonal

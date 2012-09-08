@@ -57,7 +57,9 @@ struct IntegralF
 
     IntegralF(const Function<T> &_function, const First &_first);
 
-    IntegralF(const Function<T> &_function, const First &_first, const Second &_second);
+    IntegralF(const Function<T> &_function,
+              const First &_first,
+              const Second &_second);
 
     T
     operator()(int _j1, Integer _k1, XType _e1, int _deriv) const;

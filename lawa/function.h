@@ -25,8 +25,6 @@
 
 namespace lawa {
 
-using namespace flens;
-
 template <typename T>
 struct Function
 {

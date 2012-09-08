@@ -49,7 +49,7 @@ class MRA<_T,Dual,R,CDF>
 
         const int d, d_, j0;
         BSpline<T,Dual,R,CDF> phi_;
-        RefinementMatrix<T,R,CDF> M0_;
+        flens::RefinementMatrix<T,R,CDF> M0_;
 
     private:
         mutable int _j;

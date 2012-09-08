@@ -33,6 +33,7 @@ namespace lawa {
 template <typename _T>
 class Basis<_T,Primal,R,CDF>
 {
+
     public:
         typedef _T T;
         static const FunctionSide Side = Primal;
@@ -58,7 +59,7 @@ class Basis<_T,Primal,R,CDF>
         MRA<T,Primal,R,CDF> mra;
         MRA<T,Dual,R,CDF> mra_;
         Wavelet<T,Primal,R,CDF> psi;
-        RefinementMatrix<T,R,CDF> M1;
+        flens::RefinementMatrix<T,R,CDF> M1;
 
     private:
         mutable int _j;

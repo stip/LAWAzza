@@ -56,7 +56,7 @@ class Basis<_T,Dual,R,CDF>
         MRA<T,Primal,R,CDF> mra;
         MRA<T,Dual,R,CDF> mra_;
         Wavelet<T,Dual,R,CDF> psi_;
-        RefinementMatrix<T,R,CDF> M1_;
+        flens::RefinementMatrix<T,R,CDF> M1_;
         
     private:
         mutable int _j;

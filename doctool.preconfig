@@ -1,0 +1,7 @@
+export DOC_PROJECT=LAWA
+
+export AUTHOR="I. Haecker, M. Lehn, A. Stippler"
+export AUTHOR_WEBSITE="http://www.uni-ulm.de/"
+export YEAR=`date +%Y`
+
+export CODE_DIR=${PWD}

@@ -107,31 +107,33 @@ Example: Plotting a B-Spline
 
 Complete Code
 -------------
-:import: examples/bspline.cc [stripped, downloadable]
+:import: examples/primal_bspline.cc [stripped, downloadable]
 
 Comments on Code
 ----------------
-:import: examples/bspline.cc [brief]
+:import: examples/primal_bspline.cc [brief]
 
 Compile, Run and Plot
 ---------------------
 
   *--[SHELL]----------------------------------------------------------------*
   |                                                                         |
-  | cd examples                                                             |
-  | rm -f *.o                                                               |
-  | clang++ -std=c++0x -I.. -I../../FLENS/ -c ../lawa/*.cc               +++|
-  |                                           ../lawa/math/*.cc             |
-  | clang++ -std=c++0x -I.. -I../../FLENS/ *.o -o bspline bspline.cc        |
-  | ./bspline                                                               |
-  | gnuplot bspline.gps                                                     |
+  |  cd examples                                                            |
+  |  rm -f *.o                                                              |
+  |  clang++ -std=c++0x -I.. -I../../FLENS/ -c ../lawa/*.cc              +++|
+  |                                            ../lawa/math/*.cc            |
+  |  clang++ -std=c++0x -I.. -I../../FLENS/ *.o -o primal_bspline        +++|
+  |                                                primal_bspline.cc        |
+  |  ./primal_bspline                                                       |
+  |  gnuplot primal_bspline.gps                                             |
   |                                                                         |
   *-------------------------------------------------------------------------*
 
 This produces the following image
 
+
   *--[IMAGE]----------------------------------------------------------------*
   |                                                                         |
-  | bspline.png                                                             |
+  | primal_bspline.png                                                      |
   |                                                                         |
   *-------------------------------------------------------------------------*

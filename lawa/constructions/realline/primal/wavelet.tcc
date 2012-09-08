@@ -1,6 +1,6 @@
 /*
   This file is part of LAWA - Library for Adaptive Wavelet Applications.
-  Copyright (C) 2008-2011  Mario Rometsch, Alexander Stippler.
+  Copyright (C) 2008-2012  Schalk, Alexander Stippler.
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -21,8 +21,6 @@
 
 namespace lawa {
 
-using namespace flens;
-
 template <typename T>
 Wavelet<T,Primal,R,CDF>::Wavelet(int _d, int _d_)
     : d(_d), d_(_d_), mu(d&1), l1((2-d-d_)/2), l2((d+d_)/2),
@@ -30,31 +28,32 @@ Wavelet<T,Primal,R,CDF>::Wavelet(int _d, int _d_)
       phi(d), phi_(d,d_)
 {
     if (d==2 && d_==2) {
-        singularPts.engine().resize(5);
-        singularPts = -1., 0., 0.5, 1., 2.;
+        singularPoints.engine().resize(5);
+        singularPoints = -1., 0., 0.5, 1., 2.;
     }
     else if (d==2 && d_==4) {
-        singularPts.engine().resize(7);
-        singularPts = -2., -1., 0., 0.5, 1., 2., 3.;
+        singularPoints.engine().resize(7);
+        singularPoints = -2., -1., 0., 0.5, 1., 2., 3.;
     }
     else if (d==3 && d_==3) {
-        singularPts.engine().resize(7);
-        singularPts = -2., -1., 0., 0.5, 1., 2., 3.;
+        singularPoints.engine().resize(7);
+        singularPoints = -2., -1., 0., 0.5, 1., 2., 3.;
     }
     else if (d==3 && d_==5) {
-        singularPts.engine().resize(9);
-        singularPts = -3., -2., -1., 0., 0.5, 1., 2., 3., 4.;
+        singularPoints.engine().resize(9);
+        singularPoints = -3., -2., -1., 0., 0.5, 1., 2., 3., 4.;
     }
     else if (d==3 && d_==7) {
-        singularPts.engine().resize(11);
-        singularPts = -4.,-3., -2., -1., 0., 0.5, 1., 2., 3., 4., 5.;
+        singularPoints.engine().resize(11);
+        singularPoints = -4.,-3., -2., -1., 0., 0.5, 1., 2., 3., 4., 5.;
     }
     else {
 //TODO        std::cout << "Optimized singular points not implemented!" << std::endl;
-//TODO        singularPts = linspace(l1, l2, 2*(d+d_)-1);
+//TODO        singularPoints = linspace(l1, l2, 2*(d+d_)-1);
     }
 }
 
+/*
 template <typename T>
 Wavelet<T,Primal,R,CDF>::Wavelet(const BSpline<T,Primal,R,CDF> &_phi,
                                  const BSpline<T,Dual,R,CDF> &_phi_)
@@ -64,31 +63,32 @@ Wavelet<T,Primal,R,CDF>::Wavelet(const BSpline<T,Primal,R,CDF> &_phi,
       
 {
     if (d==2 && d_==2) {
-        singularPts.engine().resize(5);
-        singularPts = -1., 0., 0.5, 1., 2.;
+        singularPoints.engine().resize(5);
+        singularPoints = -1., 0., 0.5, 1., 2.;
     }
     else if (d==2 && d_==4) {
-        singularPts.engine().resize(7);
-        singularPts = -2., -1., 0., 0.5, 1., 2., 3.;
+        singularPoints.engine().resize(7);
+        singularPoints = -2., -1., 0., 0.5, 1., 2., 3.;
     }
     else if (d==3 && d_==3) {
-        singularPts.engine().resize(7);
-        singularPts = -2., -1., 0., 0.5, 1., 2., 3.;
+        singularPoints.engine().resize(7);
+        singularPoints = -2., -1., 0., 0.5, 1., 2., 3.;
     }
     else if (d==3 && d_==5) {
-        singularPts.engine().resize(9);
-        singularPts = -3., -2., -1., 0., 0.5, 1., 2., 3., 4.;
+        singularPoints.engine().resize(9);
+        singularPoints = -3., -2., -1., 0., 0.5, 1., 2., 3., 4.;
     }
     else if (d==3 && d_==7) {
-        singularPts.engine().resize(11);
-        singularPts = -4.,-3., -2., -1., 0., 0.5, 1., 2., 3., 4., 5.;
+        singularPoints.engine().resize(11);
+        singularPoints = -4.,-3., -2., -1., 0., 0.5, 1., 2., 3., 4., 5.;
     }
     else {
         std::cout << "Optimized singular points not implemented!" << std::endl;
-        singularPts = linspace(l1, l2, 2*(d+d_)-1);
+        singularPoints = linspace(l1, l2, 2*(d+d_)-1);
         assert(0);
     }
 }
+*/
 
 template <typename T>
 Wavelet<T,Primal,R,CDF>::Wavelet(const Basis<T,Primal,R,CDF> &basis)
@@ -99,34 +99,34 @@ Wavelet<T,Primal,R,CDF>::Wavelet(const Basis<T,Primal,R,CDF> &basis)
     assert(d<=d_);
     assert(((d+d_)&1)==0);
     if (d==2 && d_==2) {
-        singularPts.engine().resize(5);
-        singularPts = -1., 0., 0.5, 1., 2.;
+        singularPoints.engine().resize(5);
+        singularPoints = -1., 0., 0.5, 1., 2.;
     }
     else if (d==2 && d_==4) {
-        singularPts.engine().resize(7);
-        singularPts = -2., -1., 0., 0.5, 1., 2., 3.;
+        singularPoints.engine().resize(7);
+        singularPoints = -2., -1., 0., 0.5, 1., 2., 3.;
     }
     else if (d==3 && d_==3) {
-        singularPts.engine().resize(7);
-        singularPts = -2., -1., 0., 0.5, 1., 2., 3.;
+        singularPoints.engine().resize(7);
+        singularPoints = -2., -1., 0., 0.5, 1., 2., 3.;
     }
     else if (d==3 && d_==5) {
-        singularPts.engine().resize(9);
-        singularPts = -3., -2., -1., 0., 0.5, 1., 2., 3., 4.;
+        singularPoints.engine().resize(9);
+        singularPoints = -3., -2., -1., 0., 0.5, 1., 2., 3., 4.;
     }
     else if (d==3 && d_==7) {
-        singularPts.engine().resize(11);
-        singularPts = -4.,-3., -2., -1., 0., 0.5, 1., 2., 3., 4., 5.;
+        singularPoints.engine().resize(11);
+        singularPoints = -4.,-3., -2., -1., 0., 0.5, 1., 2., 3., 4., 5.;
     }
     else {
         std::cout << "Optimized singular points not implemented!" << std::endl;
-        singularPts = linspace(l1, l2, 2*(d+d_)-1);
+        singularPoints = linspace(l1, l2, 2*(d+d_)-1);
     }
 }
 
 template <typename T>
 const T
-Wavelet<T,Primal,R,CDF>::operator()(T x, int j, long k, unsigned short deriv) const
+Wavelet<T,Primal,R,CDF>::operator()(T x, int j, Integer k, unsigned short deriv) const
 {
     T ret = T(0);
     x = pow2i<T>(j)*x-k;
@@ -137,8 +137,8 @@ Wavelet<T,Primal,R,CDF>::operator()(T x, int j, long k, unsigned short deriv) co
 }
 
 template <typename T>
-Support<T>
-Wavelet<T,Primal,R,CDF>::support(int j, long k) const
+const Support<T>
+Wavelet<T,Primal,R,CDF>::support(int j, Integer k) const
 {
     //required for large negative levels!!
     T scale = pow2i<T>(-j);
@@ -147,19 +147,19 @@ Wavelet<T,Primal,R,CDF>::support(int j, long k) const
 /*
 template <typename T>
 DenseVector<T>
-Wavelet<T,Primal,R,CDF>::singularSupport(int j, long k) const
+Wavelet<T,Primal,R,CDF>::singularSupport(int j, Integer k) const
 {
     return linspace(support(j,k).l1, support(j,k).l2, 2*(d+d_)-1);
 }
 
 template <typename T>
 DenseVector<T>
-Wavelet<T,Primal,R,CDF>::optim_singularSupport(int j, long k) const
+Wavelet<T,Primal,R,CDF>::optim_singularSupport(int j, Integer k) const
 {
     //return linspace(support(j,k).l1, support(j,k).l2, 2*(d+d_)-1);
-    DenseVector<T> x(singularPts.length());
+    DenseVector<T> x(singularPoints.length());
     for (int i=1; i<=x.length(); ++i) {
-        x(i) = pow2i<T>(-j)*(singularPts(i)+T(k));
+        x(i) = pow2i<T>(-j)*(singularPoints(i)+T(k));
     }
     return x;
 }
