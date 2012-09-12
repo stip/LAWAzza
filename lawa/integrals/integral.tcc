@@ -244,13 +244,64 @@ Integral<Quad,First,Second>::Integral(const First &_first,
 
 template <QuadratureType Quad, typename First, typename Second>
 typename First::T
-Integral<Quad,First,Second>::operator()(int _j1, Integer _k1, XType _e1, int _deriv1, 
+Integral<Quad,First,Second>::operator()(int _j1, Integer _k1, XType _e1, int _deriv1,
                                         int _j2, Integer _k2, XType _e2, int _deriv2) const
 {
     j1 = _j1; k1 = _k1; e1 = _e1; deriv1 = _deriv1;
     j2 = _j2; k2 = _k2; e2 = _e2; deriv2 = _deriv2;
     return _integrate(*this);
 }
+
+/*
+template <QuadratureType Quad, typename First, typename Second>
+typename RestrictTo<IsPrimal<First>::value
+                and IsPrimal<Second>::value,
+         typename First::T>::Type
+Integral<Quad,First,Second>::operator()(int _j1, Integer _k1, XType _e1, int _deriv1,
+                                        int _j2, Integer _k2, XType _e2, int _deriv2) const
+{
+    j1 = _j1; k1 = _k1; e1 = _e1; deriv1 = _deriv1;
+    j2 = _j2; k2 = _k2; e2 = _e2; deriv2 = _deriv2;
+    return _integrate(*this);
+}
+
+template <QuadratureType Quad, typename First, typename Second>
+typename RestrictTo<IsPrimal<First>::value
+                and IsDual<Second>::value,
+         typename First::T>::Type
+Integral<Quad,First,Second>::operator()(int _j1, Integer _k1, XType _e1, int _deriv,
+                                        int _j2, Integer _k2, XType _e2) const
+{
+    j1 = _j1; k1 = _k1; e1 = _e1; deriv1 = _deriv;
+    j2 = _j2; k2 = _k2; e2 = _e2; deriv2 = 0;
+    return _integrate(*this);
+}
+
+template <QuadratureType Quad, typename First, typename Second>
+typename RestrictTo<IsDual<First>::value
+                and IsPrimal<Second>::value,
+         typename First::T>::Type
+Integral<Quad,First,Second>::operator()(int _j1, Integer _k1, XType _e1,
+                                        int _j2, Integer _k2, XType _e2, int _deriv) const
+{
+    j1 = _j1; k1 = _k1; e1 = _e1; deriv1 = 0;
+    j2 = _j2; k2 = _k2; e2 = _e2; deriv2 = _deriv;
+    return _integrate(*this);
+}
+
+template <QuadratureType Quad, typename First, typename Second>
+typename RestrictTo<IsDual<First>::value
+                and IsDual<Second>::value,
+         typename First::T>::Type
+Integral<Quad,First,Second>::operator()(int _j1, Integer _k1, XType _e1,
+                                        int _j2, Integer _k2, XType _e2) const
+{
+    j1 = _j1; k1 = _k1; e1 = _e1; deriv1 = 0;
+    j2 = _j2; k2 = _k2; e2 = _e2; deriv2 = 0;
+    return _integrate(*this);
+}
+*/
+
 
 template <QuadratureType Quad, typename First, typename Second>
 typename First::T

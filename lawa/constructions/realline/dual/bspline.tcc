@@ -857,7 +857,6 @@ _calculate_bspline_mask(int d, int d_)
 
     int kappa = d & 1;
     DenseVector<T> res(_(-(d-kappa)/2-d_+1, (d+kappa)/2+d_-1));
-
     Polynomial<T> u, uh1(1), uh2(1), uh2a, uh3(1);
 
     uh1(0) = 0.;     // uh1 = z

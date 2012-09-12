@@ -52,6 +52,7 @@ _evalAtIntegersByEVP(const DenseVector<T> &a, DenseVector<T> &valuesAtIntegers)
     flens::lapack::ev(false, true, A, wr, wi, VL, VR, work);
 
     // we choose the eigenvector correspondig to the eigenvalue closest to 1.
+
     T minDiff = abs(wr(1) - 1);
     int pos = 1;
     for (int i=2; i<=wr.length(); ++i) {
@@ -66,6 +67,7 @@ _evalAtIntegersByEVP(const DenseVector<T> &a, DenseVector<T> &valuesAtIntegers)
     T sum = std::accumulate(valuesAtIntegers.engine().data(),
                             valuesAtIntegers.engine().data()
                           + valuesAtIntegers.length(), 0.0);
+    
     assert(sum);
     valuesAtIntegers /= sum;
     valuesAtIntegers.engine().changeIndexBase(l1);

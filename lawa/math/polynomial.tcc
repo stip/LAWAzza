@@ -35,6 +35,14 @@ Polynomial<T>::operator()(int n)
     return _coefficients(n);
 }
 
+template <typename T>
+Polynomial<T> &
+Polynomial<T>::operator=(const Polynomial<T> &rhs)
+{
+    _coefficients.resize(rhs._coefficients.length(), 0);
+    _coefficients = rhs._coefficients;
+    return *this;
+}
 
 template <typename T>
 Polynomial<T> &
@@ -49,7 +57,8 @@ Polynomial<T>::operator+=(const Polynomial<T> &rhs)
         for (int i=0; i<=this->degree(); ++i) {
             tmp(i) += _coefficients(i);
         }
-        this->_coefficients = tmp;
+        _coefficients.resize(tmp.length(), 0);
+        _coefficients = tmp;
     }
     return *this;
 }

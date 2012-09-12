@@ -24,6 +24,7 @@
 #include <lawa/enum.h>
 #include <lawa/function.h>
 #include <lawa/integrals/quadrature.h>
+#include <lawa/typetraits.h>
 
 namespace lawa {
 
@@ -34,9 +35,36 @@ struct Integral
 
     Integral(const First &first, const Second &second);
 
+
     T
-    operator()(int _j1, Integer _k1, XType _e1, int _deriv1,
-               int _j2, Integer _k2, XType _e2, int _deriv2) const;
+    operator()(int j1, Integer k1, XType e1, int deriv1,
+               int j2, Integer k2, XType e2, int deriv2) const;
+
+/*
+    typename RestrictTo<IsPrimal<First>::value
+                    and IsPrimal<Second>::value,
+             T>::Type
+             operator()(int j1, Integer k1, XType e1, int deriv1,
+                        int j2, Integer k2, XType e2, int deriv2) const;
+
+    typename RestrictTo<IsPrimal<First>::value
+                    and IsDual<Second>::value,
+             T>::Type
+             operator()(int j1, Integer k1, XType e1, int deriv,
+                        int j2, Integer k2, XType e2) const;
+
+     typename RestrictTo<IsDual<First>::value
+                     and IsPrimal<Second>::value,
+              T>::Type
+              operator()(int j1, Integer k1, XType e1,
+                         int j2, Integer k2, XType e2, int deriv) const;
+
+    typename RestrictTo<IsDual<First>::value
+                    and IsDual<Second>::value,
+             T>::Type
+    operator()(int j1, Integer k1, XType e1,
+               int j2, Integer k2, XType e2) const;
+*/
 
     T
     integrand(T x) const;

@@ -131,8 +131,8 @@ _bspline_mask(int d)
     T factor = 1 << (d-1);
     int kappa = d & 1;
 
-    int from = -(d+kappa)/2;
-    int to   =  (d+kappa)/2;
+    int from = (-d+kappa)/2;
+    int to   = ( d+kappa)/2;
     DenseVector<T> res(_(from,to));
     for (int i=from; i<=to; ++i) {
         res(i) = binomial(d,i-from) / factor;

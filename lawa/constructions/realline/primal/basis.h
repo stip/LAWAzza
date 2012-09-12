@@ -33,7 +33,6 @@ namespace lawa {
 template <typename _T>
 class Basis<_T,Primal,R,CDF>
 {
-
     public:
         typedef _T T;
         static const FunctionSide Side = Primal;

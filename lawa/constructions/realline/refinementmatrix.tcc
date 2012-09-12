@@ -90,6 +90,7 @@ mv(cxxblas::Transpose                                       transA,
 */
 
 
+/*
 //
 // Urban: p25-26
 //
@@ -105,6 +106,8 @@ mv(cxxblas::Transpose                                       transA,
     using namespace cxxblas;
     
     typedef typename X::ElementType T;
+
+
 
     assert(alpha==1.);
     assert(x.engine().stride()==1);
@@ -144,6 +147,100 @@ mv(cxxblas::Transpose                                       transA,
         }
     }
 }
+*/
+
+template <typename VY0, typename VMASK, typename BETA, typename VY1>
+void
+compose(const DenseVector<VY0> &y0, const DenseVector<VMASK> &mask, 
+        BETA beta, DenseVector<VY1> &y1)
+{
+    using std::max;
+    using std::min;
+    using std::sqrt;
+
+    typedef typename DenseVector<VY1>::ElementType  T;
+    
+    const int l1 = mask.firstIndex();
+    const int l2 = mask.lastIndex();
+
+    const int m1 = y0.firstIndex();
+    const int m2 = y0.lastIndex();
+
+    const int M1 = 2*m1+l1;
+    const int M2 = 2*m2+l2;
+
+#   ifndef NDEBUG
+    assert (beta==BETA(0) || y1.length()==M2-M1+1);
+#   endif
+
+    std::cerr << "l1 = " << l1 << ", l2 = " << l2 << std::endl;
+    std::cerr << "M1 = " << M1 << ", M2 = " << M2 << std::endl;
+
+
+    if (beta==BETA(0)) {
+        y1.resize(M2-M1+1, M1) || y1.fill(T(0));
+    }
+
+    for (int l=M1; l<=M2; ++l) {
+        const int m1_ = max(m1, iceil<int>((l-l2)/2.0));
+        const int m2_ = min(m2, ifloor<int>((l-l1)/2.0));
+
+        for (int m=m1_; m<=m2_; ++m) {
+            y1(l) += y0(m) * mask(l-2*m);
+        }
+    }
+}
+
+template <typename X, typename Y>
+void
+mv(cxxblas::Transpose                                       transA,
+   typename X::ElementType                                  alpha,
+   const RefinementMatrix<typename X::ElementType,R,CDF>    &A,
+   const flens::DenseVector<X>                              &x, 
+   typename X::ElementType                                  beta,
+   flens::DenseVector<Y>                                    &y)
+{
+    using namespace cxxblas;
+    using std::max;
+    using std::min;
+    using std::sqrt;
+
+    typedef typename X::ElementType T;
+
+
+    assert(alpha==1.);
+    assert(x.engine().stride()==1);
+
+    const lawa::DenseVector<T> &a = A.band;
+    
+    const int l1 = a.firstIndex();
+    const int l2 = a.lastIndex();
+    
+    const int L1 = x.firstIndex();
+    const int L2 = x.lastIndex();
+    
+    const int m1 = iceil<int>((L1 - l2)/2.);
+    const int m2 = ifloor<int>((L2 - l1)/2.);
+    
+    if (transA==cxxblas::NoTrans) {
+        assert(0);
+    } else { // (transA==cxxblas::Trans)
+        if (beta==0) {
+            y.resize(m2-m1+1, m1) || y.engine().fill();
+        } else {
+            assert(y.length()==m2-m1+1);
+            y.engine().changeIndexBase(m1);
+        }
+        for (int m=m1; m<=m2; ++m) {
+            y(m) = 0;
+            for (int l=max(l1+2*m,L1); l<=min(l2+2*m,L2); ++l) {
+                y(m) += a(l-2*m) * x(l);
+            }
+            //y(m) /= sqrt(2);
+        }
+    }
+}
+
 
 } // namespace flens
 

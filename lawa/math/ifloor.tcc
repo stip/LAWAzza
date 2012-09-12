@@ -1,7 +1,7 @@
 /*
  LAWA - Library for Adaptive Wavelet Applications.
- Copyright (C) 2008-2012 Sebastian Kestler, Kristina Steih,
-                         Alexander Stippler, Schalk.
+ Copyright (C) 2008-2011 Sebastian Kestler, Kristina Steih,
+                         Alexander Stippler, Mario Rometsch.
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -18,15 +18,20 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef LAWA_MATH_MATH_TCC
-#define LAWA_MATH_MATH_TCC
+#ifndef LAWA_MATH_IFLOOR_TCC
+#define LAWA_MATH_IFLOOR_TCC 1
 
-#include <lawa/math/floor.tcc>
-#include <lawa/math/iceil.tcc>
-#include <lawa/math/ifloor.tcc>
-#include <lawa/math/linspace.tcc>
-#include <lawa/math/polynomial.tcc>
-#include <lawa/math/pow2.tcc>
+#include <cmath>
 
-#endif // LAWA_MATH_MATH_TCC
+namespace lawa {
 
+template <typename T>
+T
+ifloor(double x)
+{
+    return T(std::floor(x));
+}
+
+} // namespace lawa
+
+#endif // LAWA_MATH_IFLOOR_TCC

@@ -10,7 +10,7 @@ using namespace std;
 int
 main()
 {
-    const int          j     = 0;
+    const int          j     = 3;
     const unsigned int d     = 2;
     const unsigned int d_    = 4;
     const unsigned int deriv = 0;
@@ -26,7 +26,7 @@ main()
     coef( 0) = 1;
     coef( 1) = 0;
 
-    const int    N = 200;
+    const int    N = 2000;
     const double a = -4;
     const double b = 4;
 

@@ -11,8 +11,8 @@ int
 main()
 {
     const int j = 1;
-    const unsigned int d = 2;
-    const unsigned int d_ = 4;
+    const unsigned int d     = 4;
+    const unsigned int d_    = 8;
 
 ///
 /// Setup a B-Spline of order `d`

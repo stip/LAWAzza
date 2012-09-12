@@ -24,6 +24,8 @@
 #include <lawa/math/binomial.h>
 #include <lawa/math/factorial.h>
 #include <lawa/math/floor.h>
+#include <lawa/math/iceil.h>
+#include <lawa/math/ifloor.h>
 #include <lawa/math/linspace.h>
 #include <lawa/math/polynomial.h>
 #include <lawa/math/pow2.h>

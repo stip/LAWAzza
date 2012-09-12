@@ -185,9 +185,11 @@ Wavelet<T,Primal,R,CDF>::mask(int d, int d_)
     assert(d<=d_);
     assert(((d+d_)&1)==0);
 
-    int mu = d & 1;
-    BSpline<T,Dual,R,CDF> phi_(d,d_);
-    DenseVector<T> b(_(2-(d+mu)/2-d_, (d-mu)/2+d_));
+    BSpline<T,Dual,R,CDF>  phi_(d,d_);
+    const int l1 = phi_.a_.firstIndex();
+    const int l2 = phi_.a_.lastIndex();
+
+    DenseVector<T> b(_(1-l2, 1-l1));
     for (int k=b.firstIndex(); k<=b.lastIndex(); ++k) {
         int sign = (k&1) ? -1 : 1;
         b(k) = sign * phi_.a_(1-k);

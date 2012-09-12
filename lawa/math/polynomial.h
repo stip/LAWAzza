@@ -1,6 +1,6 @@
 /*
  LAWA - Library for Adaptive Wavelet Applications.
- Copyright (C) 2008-2012  Schalk, Alexander Stippler.
+ Copyright (C) 2008-2012  Schalk, Alexander Stippler, Michael Lehn.
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,9 @@ class Polynomial
 
         T &
         operator()(int n);
+
+        Polynomial<T> &
+        operator=(const Polynomial<T> &rhs);
 
         Polynomial<T> &
         operator+=(const Polynomial<T> &rhs);
