@@ -18,8 +18,8 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef LAWA_CONSTRUCTIONS_REALLINE_H
-#define LAWA_CONSTRUCTIONS_REALLINE_H 1
+#ifndef LAWA_CONSTRUCTIONS_REALLINE_REALLINE_H
+#define LAWA_CONSTRUCTIONS_REALLINE_REALLINE_H 1
 
 #include <lawa/constructions/realline/cascade.h>
 #include <lawa/constructions/realline/evaluate.h>
@@ -30,4 +30,4 @@
 
 #include <lawa/constructions/realline/waveletcoeff.h>
 
-#endif // LAWA_CONSTRUCTIONS_REALLINE_H
+#endif // LAWA_CONSTRUCTIONS_REALLINE_REALLINE_H

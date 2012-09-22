@@ -77,24 +77,17 @@ main()
         d0 = transpose(dual.M1_) * c;
 
         RealDenseVector  cCheck;
-        compose(c0, primal.mra.phi.a, 0, cCheck);
-        compose(d0, primal.psi.b, 1, cCheck);
+        compose(c0, primal.mra.phi.a, d0, primal.psi.b, cCheck);
         cCheck /= sqrt(2);
 
-        compose(c0, primal.mra.phi.a, d0, primal.psi.b, cCheck);
-
-
-        
         cerr << "c = " << c << endl;
         cerr << "cCheck = " << cCheck << endl << endl;
 
         cerr << "mask: a = " << primal.mra.phi.a << endl;
         cerr << "mask: b = " << primal.psi.b << endl;
 
-
         RealDenseVector  diff = c - cCheck(_(c.firstIndex(), c.lastIndex()));
         cerr << "diff = " << diff << endl;
-
 
         for (int i=d0.firstIndex(); i<=d0.lastIndex(); ++i) {
             CoeffCoord(j,i) += d0(i);

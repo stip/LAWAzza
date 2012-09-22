@@ -149,17 +149,17 @@ mv(cxxblas::Transpose                                       transA,
 }
 */
 
-template <typename VY0, typename VMASK, typename BETA, typename VY1>
+template <typename VY0, typename VMASK, typename VY1>
 void
-compose(const DenseVector<VY0> &y0, const DenseVector<VMASK> &mask, 
-        BETA beta, DenseVector<VY1> &y1)
+_compose(const DenseVector<VY0> &y0, const DenseVector<VMASK> &mask, 
+         DenseVector<VY1> &y1)
 {
     using std::max;
     using std::min;
     using std::sqrt;
 
     typedef typename DenseVector<VY1>::ElementType  T;
-    
+
     const int l1 = mask.firstIndex();
     const int l2 = mask.lastIndex();
 
@@ -170,16 +170,10 @@ compose(const DenseVector<VY0> &y0, const DenseVector<VMASK> &mask,
     const int M2 = 2*m2+l2;
 
 #   ifndef NDEBUG
-    assert (beta==BETA(0) || y1.length()==M2-M1+1);
+    assert (y1.length()>=M2-M1+1);
+    assert (y1.firstIndex()<=M1);
+    assert (y1.lastIndex()>=M2);
 #   endif
-
-    std::cerr << "l1 = " << l1 << ", l2 = " << l2 << std::endl;
-    std::cerr << "M1 = " << M1 << ", M2 = " << M2 << std::endl;
-
-
-    if (beta==BETA(0)) {
-        y1.resize(M2-M1+1, M1) || y1.fill(T(0));
-    }
 
     for (int l=M1; l<=M2; ++l) {
         const int m1_ = max(m1, iceil<int>((l-l2)/2.0));
@@ -189,6 +183,41 @@ compose(const DenseVector<VY0> &y0, const DenseVector<VMASK> &mask,
             y1(l) += y0(m) * mask(l-2*m);
         }
     }
+}
+
+//compose(c0, primal.mra.phi.a, d0, primal.psi.b, cCheck);
+
+
+template <typename VC0, typename VA, typename VD0, typename VB, typename VC1>
+void
+compose(const DenseVector<VC0> &c0, const DenseVector<VA> &a,
+        const DenseVector<VD0> &d0, const DenseVector<VB> &b, 
+        DenseVector<VC1> &c1)
+{
+    typedef typename DenseVector<VC1>::ElementType  T;
+
+    using std::max;
+    using std::min;
+
+    const int a_l1 = a.firstIndex();
+    const int a_l2 = a.lastIndex();
+
+    const int c0_m1 = c0.firstIndex();
+    const int c0_m2 = c0.lastIndex();
+
+    const int b_l1 = b.firstIndex();
+    const int b_l2 = b.lastIndex();
+
+    const int d0_m1 = d0.firstIndex();
+    const int d0_m2 = d0.lastIndex();
+
+    const int M1 = min(2*c0_m1+a_l1, 2*d0_m1+b_l1);
+    const int M2 = max(2*c0_m2+a_l2, 2*d0_m2+b_l2);
+
+    c1.resize(M2-M1+1, M1) || c1.fill(T(0));
+
+    _compose(c0, a, c1);
+    _compose(d0, b, c1);
 }
 
 template <typename X, typename Y>

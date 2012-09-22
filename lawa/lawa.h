@@ -27,6 +27,7 @@
 #include <lawa/flensforlawa.h>
 #include <lawa/typedefs.h>
 
+#include <lawa/auxiliary/auxiliary.h>
 #include <lawa/constructions/constructions.h>
 #include <lawa/integrals/integrals.h>
 #include <lawa/math/math.h>

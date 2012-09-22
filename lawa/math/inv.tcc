@@ -1,7 +1,6 @@
 /*
  LAWA - Library for Adaptive Wavelet Applications.
- Copyright (C) 2008-2012 Sebastian Kestler, Kristina Steih,
-                         Alexander Stippler, Schalk.
+ Copyright (C) 2008-2012  Schalk, Alexander Stippler.
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -16,51 +15,46 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
+ */
 
-#ifndef LAWA_ENUM_H
-#define LAWA_ENUM_H 1
+#ifndef LAWA_MATH_INV_TCC
+#define LAWA_MATH_INV_TCC 1
+
+#include <cmath>
+#include <lawa/flensforlawa.h>
+#include <lawa/math/inv.h>
 
 namespace lawa {
 
-enum FunctionSide {
-    Dual        = 'D',
-    Orthogonal  = 'O',
-    Primal      = 'P'
-};
+template <typename T>
+int
+inv(GeMatrix<T> &A)
+{
+    DenseVector<int>  piv;
 
-enum DomainType {
-    Interval    = 'I',
-    Periodic    = 'P',
-    R           = 'R'
-};
+//
+//  change index base to one
+//
+    int i0 = A.firstRow();
+    int j0 = A.firstCol();
+    A.changeIndexBase(1,1);
 
-enum Construction {
-    CDF         = 'C',
-    Dijkema     = 'D'
-};
+//
+//  Compute inverse
+//
+    int info = flens::lapack::trf(A, piv);
+    if (info==0) {
+        flens::lapack::tri(A, piv);
+    }
 
-enum QuadratureType {
-    Gauss       = 'G',
-    Trapezoidal = 'T'
-};
-
-enum XType {
-    XBSpline    = 'S',
-    XWavelet    = 'W'
-};
-
-enum BoundaryCondition {
-    NoBC        = 0,
-    DirichletBC = 1
-};
-
-enum BoundarySide {
-    Left        = 0,
-    Right       = 1
-};
+//
+//  restore index base
+//
+    A.changeIndexBase(i0,j0);
+    return info;
+}
 
 } // namespace lawa
 
-#endif // LAWA_ENUM_H
+#endif // LAWA_MATH_INV_TCC
 

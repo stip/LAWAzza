@@ -21,14 +21,18 @@
 #ifndef LAWA_MATH_MATH_H
 #define LAWA_MATH_MATH_H
 
+#include <lawa/math/amax.h>
 #include <lawa/math/binomial.h>
+#include <lawa/math/const.h>
 #include <lawa/math/factorial.h>
 #include <lawa/math/floor.h>
 #include <lawa/math/iceil.h>
 #include <lawa/math/ifloor.h>
+#include <lawa/math/inv.h>
 #include <lawa/math/linspace.h>
 #include <lawa/math/polynomial.h>
 #include <lawa/math/pow2.h>
+#include <lawa/math/solve.h>
 
 #endif // LAWA_MATH_MATH_H
 

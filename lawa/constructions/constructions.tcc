@@ -22,6 +22,7 @@
 #define LAWA_CONSTRUCTIONS_TCC 1
 
 #include <lawa/constructions/basisfunction.tcc>
+#include <lawa/constructions/interval/interval.tcc>
 #include <lawa/constructions/realline/realline.tcc>
 #include <lawa/constructions/support.tcc>
 

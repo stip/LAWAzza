@@ -18,39 +18,10 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef LAWA_MATH_POW2_TCC
-#define LAWA_MATH_POW2_TCC 1
+#ifndef LAWA_CONSTRUCTIONS_INTERVAL_INTERVAL_TCC
+#define LAWA_CONSTRUCTIONS_INTERVAL_INTERVAL_TCC 1
 
-#include <cmath>
+#include <lawa/constructions/interval/dijkema/dijkema.tcc>
+#include <lawa/constructions/interval/refinementmatrix.tcc>
 
-namespace lawa {
-
-template <typename T>
-typename flens::RestrictTo<flens::IsSame<T,int>::value
-                        || flens::IsSame<T,Integer>::value, const T>::Type
-pow2i(int expo)
-{
-    assert(expo>=0);
-    return (T)std::ldexp(1., expo);
-}
-
-template <typename T>
-typename flens::RestrictTo<flens::IsSame<T,double>::value, const T>::Type
-pow2i(int expo)
-{
-    return std::ldexp(1., expo);
-}
-
-template <typename T>
-typename flens::RestrictTo<flens::IsSame<T,double>::value, const T>::Type
-pow2ih(int expo)
-{
-    return (expo&1) ? (expo>0) ? std::ldexp(std::sqrt(2.), expo/2)
-                               : std::ldexp(1./std::sqrt(2.), expo/2)
-                    : std::ldexp(1., expo/2);
-}
-
-} // namespace lawa
-
-#endif // LAWA_MATH_POW2_TCC
-
+#endif // LAWA_CONSTRUCTIONS_INTERVAL_INTERVAL_TCC

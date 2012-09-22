@@ -23,6 +23,7 @@
 
 #include <lawa/function.tcc>
 
+#include <lawa/auxiliary/auxiliary.tcc>
 #include <lawa/constructions/constructions.tcc>
 #include <lawa/integrals/integrals.tcc>
 #include <lawa/math/math.tcc>

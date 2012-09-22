@@ -21,12 +21,15 @@
 #ifndef LAWA_MATH_MATH_TCC
 #define LAWA_MATH_MATH_TCC
 
+#include <lawa/math/amax.tcc>
 #include <lawa/math/floor.tcc>
 #include <lawa/math/iceil.tcc>
 #include <lawa/math/ifloor.tcc>
+#include <lawa/math/inv.tcc>
 #include <lawa/math/linspace.tcc>
 #include <lawa/math/polynomial.tcc>
 #include <lawa/math/pow2.tcc>
+#include <lawa/math/solve.tcc>
 
 #endif // LAWA_MATH_MATH_TCC
 

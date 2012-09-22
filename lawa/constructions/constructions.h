@@ -23,6 +23,7 @@
 
 #include <lawa/constructions/basisfunction.h>
 #include <lawa/constructions/bspline.h>
+#include <lawa/constructions/interval/interval.h>
 #include <lawa/constructions/realline/realline.h>
 #include <lawa/constructions/support.h>
 
