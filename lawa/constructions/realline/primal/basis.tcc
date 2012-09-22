@@ -17,8 +17,12 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+#ifndef LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_BASIS_TCC
+#define LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_BASIS_TCC 1
+
 #include <lawa/constructions/realline/primal/wavelet.h>
 #include <lawa/constructions/realline/refinementmatrix.h>
+
 namespace lawa {
 
 template <typename T>
@@ -54,3 +58,4 @@ Basis<T,Primal,R,CDF>::generator(XType xtype) const
 
 } // namespace lawa
 
+#endif // LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_BASIS_TCC

@@ -545,8 +545,8 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
 
     inv(InvMass);
 
-    std::cerr << "R_init = " << R_init << std::endl;
-    std::cerr << "InvMass = " << InvMass << std::endl;
+    // std::cerr << "R_init = " << R_init << std::endl;
+    // std::cerr << "InvMass = " << InvMass << std::endl;
 
 
     GeMatrix<T>   R_(R_init.numRows(), R_init.numCols(),
@@ -563,7 +563,7 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
                  _(C_R.firstCol()-_bc(1),C_R.lastCol()));
 
 
-    std::cerr << "R_ = " << R_ << std::endl;
+    // std::cerr << "R_ = " << R_ << std::endl;
 
     GeMatrix<T>   ExtM0_(_(-l2_+1,pow2i<int>(cons_j+1)-l1_-1),
                          _(-l2_+1,pow2i<int>(cons_j)-l1_-1));

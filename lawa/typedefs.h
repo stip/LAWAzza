@@ -37,10 +37,6 @@ using cxxblas::StorageUpLo;
 using cxxblas::Upper;
 using cxxblas::Lower;
 
-using cxxblas::Side;
-using cxxblas::Left;
-using cxxblas::Right;
-
 using cxxblas::Transpose;
 using cxxblas::NoTrans;
 using cxxblas::Trans;

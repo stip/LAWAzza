@@ -17,6 +17,9 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+#ifndef LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_WAVELET_TCC
+#define LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_WAVELET_TCC 1
+
 #include <cassert>
 
 namespace lawa {
@@ -48,8 +51,8 @@ Wavelet<T,Primal,R,CDF>::Wavelet(int _d, int _d_)
         singularPoints = -4.,-3., -2., -1., 0., 0.5, 1., 2., 3., 4., 5.;
     }
     else {
-//TODO        std::cout << "Optimized singular points not implemented!" << std::endl;
-//TODO        singularPoints = linspace(l1, l2, 2*(d+d_)-1);
+//TODO  std::cout << "Optimized singular points not implemented!" << std::endl;
+//TODO  singularPoints = linspace(l1, l2, 2*(d+d_)-1);
     }
 }
 
@@ -126,7 +129,8 @@ Wavelet<T,Primal,R,CDF>::Wavelet(const Basis<T,Primal,R,CDF> &basis)
 
 template <typename T>
 const T
-Wavelet<T,Primal,R,CDF>::operator()(T x, int j, Integer k, unsigned short deriv) const
+Wavelet<T,Primal,R,CDF>::operator()(T x, int j, Integer k,
+                                    unsigned short deriv) const
 {
     T ret = T(0);
     x = pow2i<T>(j)*x-k;
@@ -199,3 +203,4 @@ Wavelet<T,Primal,R,CDF>::mask(int d, int d_)
 
 } // namespace lawa
 
+#endif // LAWA_CONSTRUCTIONS_REALLINE_PRIMAL_WAVELET_TCC

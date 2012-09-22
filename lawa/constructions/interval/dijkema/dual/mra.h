@@ -38,8 +38,8 @@ class MRA<_T,Dual,Interval,Dijkema>
         static const DomainType    Domain = Interval;
         static const Construction  Cons   = Dijkema;
 
-        typedef BasisFunction<T,Dual,Interval,Dijkema> BasisFunctionType;
-        typedef BSpline<T,Dual,Interval,Dijkema> BSplineType;
+        typedef BasisFunction<T,Dual,Interval,Dijkema>  BasisFunctionType;
+        typedef BSpline<T,Dual,Interval,Dijkema>        BSplineType;
 
         MRA(int d, int d_, int j=-1);
 

@@ -17,6 +17,9 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+#ifndef LAWA_CONSTRUCTIONS_REALLINE_DUAL_WAVELET_TCC
+#define LAWA_CONSTRUCTIONS_REALLINE_DUAL_WAVELET_TCC 1
+
 #include <cassert>
 
 #include <lawa/math/math.h>
@@ -90,3 +93,4 @@ Wavelet<T,Dual,R,CDF>::mask(int d, int d_)
 
 } // namespace lawa
 
+#endif // LAWA_CONSTRUCTIONS_REALLINE_DUAL_WAVELET_TCC

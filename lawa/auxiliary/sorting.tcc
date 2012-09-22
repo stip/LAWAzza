@@ -1,6 +1,6 @@
 /*
   LAWA - Library for Adaptive Wavelet Applications.
-  Copyright (C) 2008-2012  Schalk, Alexander Stippler.
+  Copyright (C) 2008,2009  Mario Rometsch, Alexander Stippler.
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -17,31 +17,18 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef LAWA_CONSTRUCTIONS_REALLINE_DUAL_MRA_TCC
-#define LAWA_CONSTRUCTIONS_REALLINE_DUAL_MRA_TCC 1
+#ifndef LAWA_AUXILIARY_SORTING_TCC
+#define LAWA_AUXILIARY_SORTING_TCC 1
 
 namespace lawa {
 
 template <typename T>
-MRA<T,Dual,R,CDF>::MRA(int _d, int _d_, int j)
-    : d(_d), d_(_d_), j0(j), phi_(d,d_), M0_(phi_)
+bool
+descending_by_magnitude<T>::operator()(T x, T y)
 {
-}
-
-template <typename T>
-int
-MRA<T,Dual,R,CDF>::level() const
-{
-    return _j;
-}
-
-template <typename T>
-void
-MRA<T,Dual,R,CDF>::setLevel(int j) const
-{
-    _j = j;
+    return fabs(x) > fabs(y);
 }
 
 } // namespace lawa
 
-#endif // LAWA_CONSTRUCTIONS_REALLINE_DUAL_MRA_TCC
+#endif // LAWA_AUXILIARY_SORTING_TCC

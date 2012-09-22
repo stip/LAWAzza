@@ -54,7 +54,7 @@ struct BSpline<_T,Dual,R,CDF>
     const int d, d_, mu;
     const int l1_, l2_;
     const DenseVector<T> a_;
-    
+
     static unsigned int resolution;
 };
 

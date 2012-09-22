@@ -17,6 +17,9 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+#ifndef LAWA_CONSTRUCTIONS_REALLINE_DUAL_BASIS_TCC
+#define LAWA_CONSTRUCTIONS_REALLINE_DUAL_BASIS_TCC 1
+
 namespace lawa {
 
 template <typename T>
@@ -53,3 +56,4 @@ Basis<T,Dual,R,CDF>::generator(XType xtype) const
 
 } // namespace lawa
 
+#endif //LAWA_CONSTRUCTIONS_REALLINE_DUAL_BASIS_TCC
