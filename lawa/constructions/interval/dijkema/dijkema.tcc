@@ -20,12 +20,16 @@
 #ifndef LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DIJKEMA_TCC
 #define LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DIJKEMA_TCC 1
 
+#include <lawa/constructions/interval/dijkema/dual/basis.tcc>
 #include <lawa/constructions/interval/dijkema/dual/bspline.tcc>
 #include <lawa/constructions/interval/dijkema/dual/mra.tcc>
 #include <lawa/constructions/interval/dijkema/dual/selectboundaryfunctions.tcc>
+#include <lawa/constructions/interval/dijkema/dual/wavelet.tcc>
 
+#include <lawa/constructions/interval/dijkema/primal/basis.tcc>
 #include <lawa/constructions/interval/dijkema/primal/bspline.tcc>
 #include <lawa/constructions/interval/dijkema/primal/mra.tcc>
 #include <lawa/constructions/interval/dijkema/primal/splinehelper.tcc>
+#include <lawa/constructions/interval/dijkema/primal/wavelet.tcc>
 
 #endif // LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DIJKEMA_TCC

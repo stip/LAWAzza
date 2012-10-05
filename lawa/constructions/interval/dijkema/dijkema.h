@@ -20,12 +20,16 @@
 #ifndef LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DIJKEMA_H
 #define LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DIJKEMA_H 1
 
+#include <lawa/constructions/interval/dijkema/dual/basis.h>
 #include <lawa/constructions/interval/dijkema/dual/bspline.h>
 #include <lawa/constructions/interval/dijkema/dual/mra.h>
 #include <lawa/constructions/interval/dijkema/dual/selectboundaryfunctions.h>
+#include <lawa/constructions/interval/dijkema/dual/wavelet.h>
 
+#include <lawa/constructions/interval/dijkema/primal/basis.h>
 #include <lawa/constructions/interval/dijkema/primal/bspline.h>
 #include <lawa/constructions/interval/dijkema/primal/mra.h>
 #include <lawa/constructions/interval/dijkema/primal/splinehelper.h>
+#include <lawa/constructions/interval/dijkema/primal/wavelet.h>
 
 #endif // LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DIJKEMA_H

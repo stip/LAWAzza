@@ -69,7 +69,7 @@ main()
     }
 
 //
-//  Compute the wavelet coefficient teh right way: FWT!!!
+//  Compute the wavelet coefficient the right way: FWT!!!
 //
     for (int j=J-1; j>=j0; --j) {
         RealDenseVector d0, c0;

@@ -17,43 +17,46 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DUAL_BSPLINE_H
-#define LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DUAL_BSPLINE_H 1
+#ifndef LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_PRIMAL_WAVELET_H
+#define LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_PRIMAL_WAVELET_H
 
-#include <lawa/flensforlawa.h>
-
-#include <lawa/constructions/basisfunction.h>
-#include <lawa/constructions/bspline.h>
 #include <lawa/constructions/support.h>
-#include <lawa/constructions/mra.h>
-#include <lawa/enum.h>
+#include <lawa/constructions/basis.h>
+#include <lawa/constructions/basisfunction.h>
+#include <lawa/constructions/wavelet.h>
 
 namespace lawa {
 
-template <typename _T>
-struct BSpline<_T,Dual,Interval,Dijkema>
-    : public BasisFunction<_T,Dual,Interval,Dijkema>
+template <typename _T, Construction _Cons>
+struct Wavelet<_T,Primal,Interval,_Cons>
+    : public BasisFunction<_T,Primal,Interval,_Cons>
 {
     typedef _T T;
-    static const FunctionSide Side   = Dual;
-    static const DomainType   Domain = Interval;
-    static const Construction Cons   = Dijkema;
+    static const FunctionSide   Side   = Primal;
+    static const DomainType     Domain = Interval;
+    static const Construction   Cons   = _Cons;
 
-    BSpline(const MRA<T,Dual,Interval,Dijkema> &mra_);
+    Wavelet(const Basis<T,Primal,Interval,Cons> &_basis);
 
     const T
-    operator()(T x, int j, int k, unsigned short deriv=0) const;
+    operator()(T x, int j, Integer k, unsigned short deriv) const;
 
     const Support<T>
     support(int j, int k) const;
 
-    const MRA<T,Dual,Interval,Dijkema> &mra_;
+    const DenseVector<T>
+    singularSupport(int j, long k) const;
 
-    private:
-        const BSpline<T,Dual,R,CDF>  _phi_R;
+    const int
+    vanishingMoments(int j, long k) const;
+
+    const T
+    tic(int j) const;
+
+    const Basis<T,Primal,Interval,Cons> &basis;
 };
 
 } // namespace lawa
 
-#endif // LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_DUAL_BSPLINE_H
+#endif // LAWA_CONSTRUCTIONS_INTERVAL_DIJKEMA_PRIMAL_WAVELET_H
 

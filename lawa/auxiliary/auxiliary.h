@@ -21,6 +21,7 @@
 #define LAWA_AUXILIARY_AUXILIARY_H 1
 
 #include <lawa/auxiliary/arrow.h>
+#include <lawa/auxiliary/densify.h>
 #include <lawa/auxiliary/sorting.h>
 
 #endif // LAWA_AUXILIARY_AUXILIARY_H

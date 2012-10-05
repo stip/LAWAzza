@@ -39,6 +39,7 @@ class RefinementMatrix<T, Interval, Cons>
         RefinementMatrix();
 
         RefinementMatrix(int nLeft, int nRight,
+                         int leftBandOffset, int rightBandOffset,
                          const lawa::GeMatrix<T> &A,
                          int _min_j0, int cons_j);
 
@@ -85,7 +86,9 @@ class RefinementMatrix<T, Interval, Cons>
     private:
 
         void
-        _extractMasks(const lawa::GeMatrix<T> &A);
+        _extractMasks(const lawa::GeMatrix<T> &A,
+                      int leftBandOffset,
+                      int rightBandOffset);
 
         int          _cons_j;
         mutable int  _j;

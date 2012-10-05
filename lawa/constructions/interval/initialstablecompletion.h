@@ -17,11 +17,21 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef LAWA_AUXILIARY_AUXILIARY_TCC
-#define LAWA_AUXILIARY_AUXILIARY_TCC 1
+#ifndef LAWA_CONSTRUCTIONS_INTERVAL_INITIALSTABLECOMPLETION_H
+#define LAWA_CONSTRUCTIONS_INTERVAL_INITIALSTABLECOMPLETION_H 1
 
-#include <lawa/auxiliary/arrow.tcc>
-#include <lawa/auxiliary/densify.tcc>
-#include <lawa/auxiliary/sorting.tcc>
+#include <lawa/flensforlawa.h>
 
-#endif // LAWA_AUXILIARY_AUXILIARY_TCC
+namespace lawa {
+
+template <typename T, Construction ConsPrimal, Construction ConsDual>
+void
+initialStableCompletion(const MRA<T,Primal,Interval,ConsPrimal> &mra,
+                        const MRA<T,Dual,Interval,ConsDual> &mra_,
+                        GeMatrix<T> &M1,
+                        GeMatrix<T> &M1_);
+
+} // namespace lawa
+
+#endif // LAWA_CONSTRUCTIONS_INTERVAL_INITIALSTABLECOMPLETION_H
+

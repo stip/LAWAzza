@@ -208,8 +208,10 @@ _integrand(const Integral<Quad,First,Second> &integral, typename First::T x)
     const typename First::BasisFunctionType &first = integral.first.generator(integral.e1);
     const typename Second::BasisFunctionType &second = integral.second.generator(integral.e2);
 
-    return first(x, integral.j1, integral.k1, integral.deriv1)
-         * second(x, integral.j2, integral.k2, integral.deriv2);
+    const auto _first  = first(x, integral.j1, integral.k1, integral.deriv1);
+    const auto _second = second(x, integral.j2, integral.k2, integral.deriv2);
+
+    return _first * _second;
 }
 /*
 //--- function * primal/dual/orthogonal

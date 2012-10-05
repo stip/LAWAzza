@@ -22,6 +22,7 @@
 #define LAWA_CONSTRUCTIONS_INTERVAL_INTERVAL_H 1
 
 #include <lawa/constructions/interval/dijkema/dijkema.h>
+#include <lawa/constructions/interval/initialstablecompletion.h>
 #include <lawa/constructions/interval/refinementmatrix.h>
 
 #endif // LAWA_CONSTRUCTIONS_INTERVAL_INTERVAL_H

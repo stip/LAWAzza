@@ -283,6 +283,7 @@ MRA<T,Primal,Interval,Dijkema>::_calcM0()
 
     GeMatrix<T> _Mj0 = Mj0(_(I0,I1), _(J0,J1));
     M0 = RefinementMatrix<T,Interval,Dijkema>(d-1-_bc(0), d-1-_bc(1),
+                                              _bc(0), _bc(1),
                                               _Mj0, j, j);
 
 //

@@ -200,10 +200,10 @@ MRA<T,Dual,Interval,Dijkema>::_calcC_LR(BoundarySide side, GeMatrix<T> &C_LR)
     int                numUsed = 0;
     bool               swapped;
     
-    
+    /*
     cerr << "r =  " << r << endl;
     cerr << "VR = " << VR << endl;
-
+    */
 
     r_skip = false;
     r_used = false;
@@ -312,13 +312,15 @@ MRA<T,Dual,Interval,Dijkema>::_calcC_LR(BoundarySide side, GeMatrix<T> &C_LR)
     const int i0 = r_card.firstIndex()+bc;
     const int i1 = r_card.lastIndex();
     
-    cerr << "r_card = "  << r_card << endl;
-    cerr << "r = "  << r << endl;
-    cerr << "extra = "  << extra << endl;
+    //cerr << "r_card = "  << r_card << endl;
+    //cerr << "r = "  << r << endl;
+    //cerr << "extra = "  << extra << endl;
     
     for (int i=i0, I=C_LR.firstCol(); i<=i1; ++i, ++I) {
         C_LR(_,I) = VR(_,r_card(i));
-        cerr << "r_card(" << i << ") = " << r_card(i) << endl;
+        /*
+        cerr << "select cardinals:  r(" << i << ") = " << r_card(i) << endl;
+        */
     }
 
 //
@@ -328,6 +330,9 @@ MRA<T,Dual,Interval,Dijkema>::_calcC_LR(BoundarySide side, GeMatrix<T> &C_LR)
 
     for (int i=r_free.firstIndex(), I=I0; I<=C_LR.lastCol(); ++i, ++I) {
         C_LR(_,I) = VR(_,r_free(i));
+        /*
+        cerr << "select free:       r(" << i << ") = " << r_free(i) << endl;
+        */
     }
 
     if (side==Right) {
@@ -362,6 +367,9 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
     using cxxblas::Trans;
 
     const int cons_j = ((d==2) && ((d_==2) || (d_==4))) ? min_j0+1 : min_j0;
+    
+    
+    std::cerr << "cons_j = " << cons_j << std::endl;
 
     const int  l1  = (mu-d)/2;
     const int  l2  = (mu+d)/2;
@@ -375,8 +383,6 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
     _calcC_L(C_L);
     _calcC_R(C_R);
     
-    cerr << "C_L = " << C_L << endl;
-    cerr << "C_R = " << C_R << endl;
 
 //
 //  Page 25 (top)
@@ -390,7 +396,12 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
 
     C_R.changeIndexBase(R_init.lastRow()-C_R.numRows()+1,
                         R_init.lastCol()-C_R.numCols()+1);
-    
+
+/*
+    cerr << "C_L = " << C_L << endl;
+    cerr << "C_R = " << C_R << endl;
+*/
+
     assert(R_init.numRows()==pow2i<int>(cons_j)+l2_-l1_-1);
     assert(R_init.numCols()==pow2i<int>(cons_j)+l2-l1-1-_bc(0)-_bc(1));
     assert(R_init.firstRow()==-l2_+1);
@@ -403,9 +414,9 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
     R_init(C_L) = C_L;
     R_init(C_R) = C_R;
 
-
-//    // cout << "R_init = " << R_init << endl;
-
+/*
+    cout << "R_init = " << R_init << endl;
+*/
     BSpline<T,Primal,R,CDF> phi(d);
     int kmin = -l2+1, mmin = -l2_+1, pmin = -l2+1, qmin = -l2_+1,
         kmax = -l1-1, mmax = -l1_-1, pmax = -l1-1, qmax = -l1_-1;
@@ -432,6 +443,10 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
         Z(i,i) -= 1.;
     }
     Z *= -1;
+
+/*
+    cout << "Z = " << Z << endl;
+*/
 
     DenseVector<T> f(Z.numCols(), Z.firstCol());
     for (int p=pmin; p<=pmax; ++p) {
@@ -508,6 +523,9 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
     for (int c=R.firstCol(); c<=R.lastCol(); ++c, ++rr) {
         R(rr,c) = 1.;
     }
+    /*
+    cout << "R = " << R << endl;
+    */
 
     const int         m            = Transformation.lastRow();
     GeMatrix<T>       TransInvLeft = Transformation(_(m-(d-1)+1,m), _);
@@ -517,11 +535,18 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
     TransInvLeft.changeIndexBase(R.firstRow(),R.firstCol());
     R(TransInvLeft) = TransInvLeft;
 
+/*
+    cout << "TransInvLeft = " << TransInvLeft << endl;
+*/
+
     GeMatrix<T>  TransInvRight;
     arrow(TransInvLeft, TransInvRight);
     TransInvRight.changeIndexBase(R.lastRow()-TransInvRight.numRows()+1,
                                   R.lastCol()-TransInvRight.numCols()+1);
     R(TransInvRight) = TransInvRight;
+    /*
+    cout << "R = " << R << endl;
+    */
 
 //
 //  R on level j+1
@@ -529,7 +554,19 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
 //
     GeMatrix<T>  RjPlus1(_(-l2+1,pow2i<int>(cons_j+1)-l1-1),
                          _(-l2+1+_bc(0),pow2i<int>(cons_j+1)-l1-1-_bc(1)));
-    RjPlus1.diag(0) = 1.;
+    
+    //RjPlus1.diag(0) = 1.;
+    
+    rr = RjPlus1.firstRow()+_bc(0);
+    for (int c=RjPlus1.firstCol(); c<=RjPlus1.lastCol(); ++c, ++rr) {
+        RjPlus1(rr,c) = 1.;
+    }
+
+/*
+    cout << "RjPlus1 = " << RjPlus1 << endl;
+*/
+    
+    
     TransInvLeft.changeIndexBase(RjPlus1.firstRow(),RjPlus1.firstCol());
     RjPlus1(TransInvLeft) = TransInvLeft;
     TransInvRight.changeIndexBase(RjPlus1.lastRow()-TransInvRight.numRows()+1,
@@ -557,13 +594,19 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
     R_Left.resize(0,0);
     R_Right.resize(0,0);
 
+    R_Left  = R_(C_L);
+    R_Right = R_(C_R);
+
+    /*
     R_Left = R_(_(C_L.firstRow(),C_L.lastRow()),
                 _(C_L.firstCol(),C_L.lastCol()+_bc(0)));
     R_Right = R_(_(C_R.firstRow(),C_R.lastRow()),
                  _(C_R.firstCol()-_bc(1),C_R.lastCol()));
+    */
 
-
-    // std::cerr << "R_ = " << R_ << std::endl;
+/*
+    std::cerr << "R_ = " << R_ << std::endl;
+*/
 
     GeMatrix<T>   ExtM0_(_(-l2_+1,pow2i<int>(cons_j+1)-l1_-1),
                          _(-l2_+1,pow2i<int>(cons_j)-l1_-1));
@@ -574,22 +617,46 @@ MRA<T,Dual,Interval,Dijkema>::_calcM0_()
         }
     }
 
+/*
+    std::cerr << "RjPlus1 = " << RjPlus1 << std::endl;
+    std::cerr << "ExtMassjPlus1 = " << ExtMassjPlus1 << std::endl;
+*/
+
     GeMatrix<T>  Mj0_, M0_Tmp;
     blas::mm(Trans, NoTrans, 1., RjPlus1, ExtMassjPlus1, 0., Mj0_);
+
+/*
+    std::cerr << "Mj0_ = " << Mj0_ << std::endl;
+*/
+
     blas::mm(NoTrans, NoTrans, 1., Mj0_, ExtM0_, 0., M0_Tmp);
+
+/*
+    std::cerr << "ExtM0_ = " << ExtM0_ << std::endl;
+    std::cerr << "M0_Tmp = " << M0_Tmp << std::endl;
+
+    std::cerr << "R_ = " << R_ << std::endl;
+    std::cerr << "R_Left = " << R_Left << std::endl;
+    std::cerr << "R_Right = " << R_Right << std::endl;
+*/
 
     Mj0_.resize(0,0);
     blas::mm(NoTrans, NoTrans, 1., M0_Tmp, R_, 0., Mj0_);
+
+/*
+    std::cerr << "Mj0_ = " << Mj0_ << std::endl;
+*/
 
     Mj0_.changeIndexBase(1+_bc(0),1+_bc(1));
     blas::scal(Const<T>::R_SQRT2, Mj0_);
     R_Left.changeIndexBase(1,1+_bc(0));
     R_Right.changeIndexBase(1,1);
     
-    //cerr << Mj0_ << endl;
+    cerr << "Mj0_ = " << Mj0_ << endl;
     Mj0_.changeIndexBase(1,1);
     
     M0_ = RefinementMatrix<T,Interval,Dijkema>(d+d_-2-_bc(0), d+d_-2-_bc(1),
+                                               _bc(0), _bc(1),
                                                Mj0_, min_j0, cons_j);
     setLevel(_j);
 }

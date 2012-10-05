@@ -13,6 +13,8 @@ main()
     const int d = 2;
 
     MRA<double,Primal,Interval,Dijkema>  mra(d);
+
+    mra.enforceBoundaryConditions<DirichletBC, DirichletBC>();
     
     cout << mra.cardIL() << " " << mra.cardIR() << endl;
     cout << mra.M0.left.range() << " " << mra.M0.right.range() << endl;

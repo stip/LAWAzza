@@ -15,13 +15,24 @@
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
+*/
 
-#ifndef LAWA_AUXILIARY_AUXILIARY_TCC
-#define LAWA_AUXILIARY_AUXILIARY_TCC 1
+#ifndef LAWA_AUXILIARY_DENSIFY_H
+#define LAWA_AUXILIARY_DENSIFY_H 1
 
-#include <lawa/auxiliary/arrow.tcc>
-#include <lawa/auxiliary/densify.tcc>
-#include <lawa/auxiliary/sorting.tcc>
+#include <lawa/flensforlawa.h>
 
-#endif // LAWA_AUXILIARY_AUXILIARY_TCC
+namespace lawa {
+
+using namespace flens;
+    
+template <typename I>
+void
+densify(cxxblas::Transpose trans, const Matrix<I> &A,
+        GeMatrix<typename I::ElementType> &D,
+        int firstRow=1, int firstCol=1);
+
+} // namespace lawa
+
+#endif // LAWA_AUXILIARY_DENSIFY_H
+

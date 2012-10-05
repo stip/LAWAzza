@@ -33,8 +33,10 @@ BSpline<T,Dual,Interval,Dijkema>::BSpline(const MRA<T,Dual,Interval,Dijkema>
 
 template <typename T>
 const T
-BSpline<T,Dual,Interval,Dijkema>::operator()(T x, int j, int k) const
+BSpline<T,Dual,Interval,Dijkema>::operator()(T x, int j, int k,
+                                             unsigned short deriv) const
 {
+    assert(deriv==0);
     assert(j>=mra_.j0);
     assert(k>=mra_.rangeI_(j).firstIndex());
     assert(k<=mra_.rangeI_(j).lastIndex());
@@ -44,10 +46,20 @@ BSpline<T,Dual,Interval,Dijkema>::operator()(T x, int j, int k) const
 
         int l = -_phi_R.a_.lastIndex()+1;
 
-        const int r0 = mra_.R_Right.firstRow();
-        const int r1 = mra_.R_Right.lastRow();
+        //const int r0 = mra_.R_Right.firstRow();
+        //const int r1 = mra_.R_Right.lastRow();
+        const int r0 = mra_.R_Left.firstRow();
+        const int r1 = mra_.R_Left.lastRow();
 
         for (int r=r0; r<=r1; ++r, ++l) {
+            /*
+            std::cerr << "mra_.R_Left(" << r << ", " << k << ") = ";
+            std::cerr << mra_.R_Left(r,k) << std::endl;
+
+            std::cerr << "_phi_R(" << x << ", " << j << ", " << l << ")";
+            std::cerr << _phi_R(x,j,l) << std::endl;
+            */
+
             value += mra_.R_Left(r,k) * _phi_R(x,j,l);
         }
 //        assert(l==-_phi_R.a_.firstIndex());

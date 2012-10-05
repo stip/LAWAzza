@@ -22,6 +22,7 @@
 #define LAWA_CONSTRUCTIONS_INTERVAL_INTERVAL_TCC 1
 
 #include <lawa/constructions/interval/dijkema/dijkema.tcc>
+#include <lawa/constructions/interval/initialstablecompletion.tcc>
 #include <lawa/constructions/interval/refinementmatrix.tcc>
 
 #endif // LAWA_CONSTRUCTIONS_INTERVAL_INTERVAL_TCC

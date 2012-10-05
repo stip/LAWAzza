@@ -23,7 +23,7 @@
 #include <cassert>
 #include <cmath>
 #include <lawa/auxiliary/auxiliary.h>
-#include <lawa/math/math.h>
+#include <lawa/flensforlawa.h>
 
 namespace flens {
 
@@ -36,6 +36,8 @@ RefinementMatrix<T,Interval,Cons>::RefinementMatrix()
 
 template <typename T, Construction Cons>
 RefinementMatrix<T,Interval,Cons>::RefinementMatrix(int nLeft, int nRight,
+                                                    int leftBandOffset,
+                                                    int rightBandOffset,
                                                     const lawa::GeMatrix<T> &A,
                                                     int _min_j0, int cons_j)
     : left(nLeft, nLeft>0 ? A.firstCol() : 1),
@@ -49,11 +51,7 @@ RefinementMatrix<T,Interval,Cons>::RefinementMatrix(int nLeft, int nRight,
     assert(nRight>=0);
     assert(_cons_j>=min_j0);
     assert(_firstCol>=1);
-    
-    cerr << rows() << endl;
-    cerr << cols() << endl;
-
-    _extractMasks(A);
+    _extractMasks(A, leftBandOffset, rightBandOffset);
 }
 
 template <typename T, Construction Cons>
@@ -212,9 +210,22 @@ RefinementMatrix<T,Interval,Cons>::setLevel(int j) const
 
 template <typename T, Construction Cons>
 void
-RefinementMatrix<T,Interval,Cons>::_extractMasks(const lawa::GeMatrix<T> &A)
+RefinementMatrix<T,Interval,Cons>::_extractMasks(const lawa::GeMatrix<T> &A,
+                                                 int leftBandOffset,
+                                                 int rightBandOffset)
 {
     using std::abs;
+
+    assert(leftBandOffset>=0);
+    assert(rightBandOffset>=0);
+
+/*
+    std::cerr << "_extractMasks:" << std::endl;
+    std::cerr << "A = " << A << std::endl;
+
+    std::cerr << "left =  " << left << std::endl;
+    std::cerr << "right = " << right << std::endl;
+*/
 
 //
 //  extract left block
@@ -245,7 +256,8 @@ RefinementMatrix<T,Interval,Cons>::_extractMasks(const lawa::GeMatrix<T> &A)
 //
 //  extract band (left, middle]
 //
-    int c = A.firstCol()+left.length();
+    int c = A.firstCol()+left.length()+leftBandOffset;
+    
     int first = A.firstRow();
     while (abs(A(first,c))<=1e-12) {
         ++first;
@@ -271,7 +283,7 @@ RefinementMatrix<T,Interval,Cons>::_extractMasks(const lawa::GeMatrix<T> &A)
 //
 //  extract band (middle, right)
 //
-    c = A.lastCol()-right.length();
+    c = A.lastCol()-right.length()-rightBandOffset;
     first = A.firstRow();
     while (abs(A(first,c))<=1e-12) {
         ++first;
@@ -298,24 +310,37 @@ RefinementMatrix<T,Interval,Cons>::_extractMasks(const lawa::GeMatrix<T> &A)
 //
     assert(leftBand.length()==rightBand.length());
 #   endif
+
+/*
+    std::cerr << "leftBand = " << leftBand << std::endl;
+    std::cerr << "rightBand = " << rightBand << std::endl;
+*/
 }
 
 //------------------------------------------------------------------------------
 
 template <typename X, Construction Cons, typename Y>
 void
-mv(Transpose transA, typename X::ElementType alpha,
-   const RefinementMatrix<typename X::ElementType,Interval,Cons> &A,
-   const DenseVector<X> &x, typename X::ElementType beta, DenseVector<Y> &y)
+mv(Transpose                                                       transA,
+   typename X::ElementType                                         alpha,
+   const RefinementMatrix<typename X::ElementType,Interval,Cons>   &A,
+   const DenseVector<X>                                            &x,
+   typename X::ElementType beta, DenseVector<Y>                    &y)
 {
     typedef typename X::ElementType T;
     assert(alpha==T(1));
     assert(x.stride()==1);
     assert(y.stride()==1);
-    
-    cerr << "left range:" << A.left.range() << endl;
-    cerr << "right range:" << A.right.range() << endl;
 
+/*
+    cerr << "x = " << x << endl;
+    
+    cerr << "A.left = " << A.left << endl;
+    cerr << "A.right = " << A.right << endl;
+
+    cerr << "A.leftBand = " << A.leftBand << endl;
+    cerr << "A.rightBand = " << A.rightBand << endl;
+*/
     if (transA==NoTrans) {
         assert(A.numCols()==x.length());
 
@@ -328,8 +353,12 @@ mv(Transpose transA, typename X::ElementType alpha,
 
         // left upper block
         int ix = x.firstIndex();
-        cerr << "first ix: " << ix << endl;
-        
+
+/*
+        cerr << "left upper block:" << endl;
+        cerr << "   from: " << A.left.firstIndex() << endl;
+        cerr << "   to:   " << A.left.lastIndex() << endl;
+*/
         for (int c=A.left.firstIndex(); c<=A.left.lastIndex(); ++c, ++ix) {
             int n = A.left(c).length();
             cxxblas::axpy(n, 
@@ -337,22 +366,36 @@ mv(Transpose transA, typename X::ElementType alpha,
                           A.left(c).data(), 1,
                           y.data(), 1);
         }
-        cerr << "first left band ix: " << ix << endl;
 
         // central band (up to middle)
         int iy = A.leftBand.firstIndex()-A.firstRow();
         int n = A.leftBand.length();
-        int middle = iceil<int>(x.length()/2.)+A.firstCol();
+
+        //int middle = iceil<int>(x.length()/2.)+A.firstCol();
+        //int middle = iceil<int>((A.firstCol()+A.lastCol())/2.0);
+        //const int middle = iceil<int>((A.firstCol()+A.lastCol()+A.left.length()-A.right.length())/2.0);
+        const int middle = A.firstCol()+A.left.length()-1
+                         + iceil<int>((x.length()-A.left.length()-A.right.length())/2.0);
+
+/*
+        cerr << "central band (up to middle):" << endl;
+        cerr << "   from: " << A.left.lastIndex()+1 << endl;
+        cerr << "   to:   " << middle << endl;
+*/
         for (int c=A.left.lastIndex()+1; c<=middle; ++c, iy+=2, ++ix) {
             cxxblas::axpy(n,
                           x(ix),
                           A.leftBand.data(), 1,
                           y.data()+iy, 1);
         }
-        cerr << "first right band ix: " << ix << endl;
         
         // central band (right of middle)
         int end = A.left.firstIndex() + x.length() - A.right.length();
+/*
+        cerr << "central band (right of middle):" << endl;
+        cerr << "   from: " << middle+1 << endl;
+        cerr << "   to:   " << end-1 << endl;
+*/
         for (int c=middle+1; c<end; ++c, iy+=2, ++ix) {
             cxxblas::axpy(n,
                           x(ix),
@@ -360,20 +403,19 @@ mv(Transpose transA, typename X::ElementType alpha,
                           y.data()+iy, 1);
         }
 
-        cerr << "first right  ix: " << ix << endl;
         // right lower block
-        cerr << "World1" << endl;
-        cerr << "x = " << x << endl;
-        cerr << "x.range() = " << x.range() << endl;
+/*
+        cerr << "right lower block:" << endl;
+        cerr << "   from: " << A.right.firstIndex() << endl;
+        cerr << "   to:   " << A.right.lastIndex() << endl;
+*/
         for (int c=A.right.firstIndex(); c<=A.right.lastIndex(); ++c, ++ix) {
-            cerr << "c = " << c << ", ix = " << ix << endl;
             int n = A.right(c).length();
             cxxblas::axpy(n, 
                           x(ix),
                           A.right(c).data(), 1,
                           y.data()+y.length()-1-n+1, 1);
         }
-        cerr << "World2" << endl;
     } else { // transA==Trans
         assert(A.numRows()==x.length());
 

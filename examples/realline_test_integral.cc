@@ -16,7 +16,7 @@ using namespace std;
 #endif
 
 
-typedef GeMatrix<double>  RealGeMatrix;
+typedef lawa::GeMatrix<double>  RealGeMatrix;
 
 
 int

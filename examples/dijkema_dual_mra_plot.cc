@@ -1,8 +1,3 @@
-//
-// g++ -g -std=c++11 -DENFORCE_BC_RIGHT -DFLENS_IO_WITH_RANGES -DSET_D=3 -DSET_D_=9 -Wall -I.. -I../../FLENS/ dijkema_dual_mra_test.cc *.o 2>&1
-//
-
-
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -122,101 +117,46 @@ main()
               << std::endl;
 #   endif // ENFORCE_BC
 
-    {
-        const int m = mra.M0.numRows();
-        const int n = mra.M0.numCols();
-        cerr << m << " x " << n << endl;
-        lawa::GeMatrix<double> P(m,n);
-        lawa::DenseVector<double> e(n);
-        for (int i=1; i<=n; ++i) {
-            e(i) = 1.;
-            P(_,i) = mra.M0*e;
-            e(i) = 0.;
-        }
-        cout << "P = " << P << endl;
-    }
-
-    {
-        const int m = mra_.M0_.numRows();
-        const int n = mra_.M0_.numCols();
-        cerr << m << " x " << n << endl;
-        lawa::GeMatrix<double> D(m,n);
-        lawa::DenseVector<double> e(n);
-        for (int i=1; i<=n; ++i) {
-            e(i) = 1.;
-            D(_,i) = mra_.M0_*e;
-            e(i) = 0.;
-        }
-        cout << "D = " << D << endl;
-    }
-
-/*
-    const int N = 2000;
-
-    for (int i=0; i<N; ++i) {
-        double x = double(i)/N;
-        double y = mra_.phi_(x, mra_.min_j0, 1);
-        cout << x << " " << y << endl;
-    }
-*/
-
     typedef BSpline<double,Primal,Interval,Dijkema>  RealBSpline;
     typedef BSpline<double,Dual,Interval,Dijkema>    RealBSpline_;
 
-    SimpleIntegral<Trapezoidal,RealBSpline,RealBSpline_>  integral(mra.phi, mra_.phi_);
-    
-    const int j  = std::max(mra.min_j0, mra_.min_j0);
-    
-    const int k0 = mra.rangeI(j).firstIndex();
-    const int k1 = mra.rangeI(j).lastIndex();
-    
-    const int k_0 = mra_.rangeI_(j).firstIndex();
-    const int k_1 = mra_.rangeI_(j).lastIndex();
-    
-    cout << "j = " << j << endl;
-    
-    lawa::GeMatrix<double>  C(_(k0,k1), _(k_0,k_1));
-    
-    integral.quadrature.setN(6000);
-    
+    const int j0 = std::max(mra.j0,  mra_.j0);
+
+
+    const int k0 = mra.rangeI(j0).firstIndex();
+    const int k1 = mra.rangeI(j0).lastIndex();
+
+    RealBSpline bSpline(mra);
+
+    cerr << "j0 = " << j0 << endl;
+    cerr << "primal range = " << 0 << ":" << k1-k0 << endl;
+
+    const int N = 1000;
     for (int k=k0; k<=k1; ++k) {
-        for (int k_=k_0; k_<=k_1; ++k_) {
-            //std::cerr << "k = " << k << ", k_ = " << k_ << endl;
-            auto value = integral(j, k, 0, j, k_, 0);
-            //std::cerr << "value = " << value << endl;
-            C(k,k_) = value;
+        for (int i=0; i<=N; ++i) {
+            const double x = i/double(N);
+            cout << x << " " << bSpline(x, j0, k, 0) << endl;
         }
-    }
-    
-    
-    cout << "d = " << d << ", d_ = " << d_ << endl;
-    cout << "C = " << C << endl;
-    
-    const double tol = 1e-4;
-    for (int k=k0; k<=k1; ++k) {
-        for (int k_=k_0; k_<=k_1; ++k_) {
-            if (std::abs(C(k,k_))<tol) {
-                C(k,k_) = 0;
-            }
-        }
+        cout << endl << endl;
     }
 
-    std::cerr << "mra_.rangeI_(j) = "
-              << mra_.rangeI_(j)
-              << std::endl;
 
-    std::cerr << "mra_.rangeI_L() = "
-              << mra_.rangeI_L()
-              << std::endl;
-    std::cerr << "mra_.R_Left = " << mra_.R_Left << std::endl;
+    const int k0_ = mra_.rangeI_(j0).firstIndex();
+    const int k1_ = mra_.rangeI_(j0).lastIndex();
 
-    std::cerr << "mra_.rangeI_R(j) = "
-             << mra_.rangeI_R(j)
-             << std::endl;
-    std::cerr << "mra_.R_Right = " << mra_.R_Right << std::endl;
-    
-    cout << "d = " << d << ", d_ = " << d_ << endl;
-    cout << "C = " << C << endl;
+    RealBSpline_ bSpline_(mra_);
+
+    cerr << "dual range = " << k1-k0+1 << ":" << k1_-k0_ + (k1-k0+1) << endl;
+
+    for (int k=k0_; k<=k1_; ++k) {
+        for (int i=0; i<=N; ++i) {
+            const double x = i/double(N);
+            cout << x << " " << bSpline_(x, j0, k) << endl;
+        }
+        cout << endl << endl;
+    }
+
+
 
 #   ifdef ENFORCE_BC_LEFT
     std::cerr << "compiled with ENFORCE_BC_LEFT" << std::endl;
